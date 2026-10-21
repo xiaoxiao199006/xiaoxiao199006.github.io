@@ -153,19 +153,22 @@
       <h2>提交项目需求 · Submit a Project Request</h2>
       <p>填写尽量具体的信息，我们将在确认后与您联系。带 * 为必填。</p>
     </div>
-    <form class="form" data-demo novalidate>
+    <form class="form" action="https://formsubmit.co/busbang.will@gmail.com" method="POST">
+      <input type="hidden" name="_subject" value="新的企业/团队项目咨询 - 经纬易行">
+      <input type="hidden" name="_next" value="https://jingweiyixing.com/business-groups.html?success=1">
+      <input type="hidden" name="_captcha" value="false">
       <div class="row row--2">
         <div class="field">
           <label for="b-org">公司 / 机构名称 * <span class="en">Company / Organization</span></label>
-          <input id="b-org" name="org" type="text" required>
+          <input id="b-org" name="公司/机构名称" type="text" required>
         </div>
         <div class="field">
           <label for="b-contact">联系人及联系方式 * <span class="en">Contact Person &amp; Details</span></label>
-          <input id="b-contact" name="contact" type="text" required>
+          <input id="b-contact" name="联系人及联系方式" type="text" required>
         </div>
         <div class="field">
           <label for="b-type">项目类型 * <span class="en">Project Type</span></label>
-          <select id="b-type" name="type" required>
+          <select id="b-type" name="项目类型" required>
             <option value="">请选择</option>
             <option>企业差旅 / 商务访问</option>
             <option>海外展会及活动交通</option>
@@ -178,33 +181,31 @@
         </div>
         <div class="field">
           <label for="b-dest">目的地及城市 * <span class="en">Destination(s)</span></label>
-          <input id="b-dest" name="dest" type="text" required placeholder="如：英国 伦敦 + 曼彻斯特">
+          <input id="b-dest" name="目的地及城市" type="text" required placeholder="如：英国 伦敦 + 曼彻斯特">
         </div>
         <div class="field">
           <label for="b-date">出行日期或时间范围 * <span class="en">Travel Dates</span></label>
-          <input id="b-date" name="date" type="text" required placeholder="如：2026-11-15 至 2026-11-22">
+          <input id="b-date" name="出行日期" type="text" required placeholder="如：2026-11-15 至 2026-11-22">
         </div>
         <div class="field">
           <label for="b-group">人数与车辆需求 <span class="en">Group Size &amp; Vehicles</span></label>
-          <input id="b-group" name="group" type="text" placeholder="如：28人，需 1 大巴 + 2 商务车">
+          <input id="b-group" name="人数与车辆需求" type="text" placeholder="如：28人，需 1 大巴 + 2 商务车">
         </div>
         <div class="field">
           <label for="b-budget">预算范围（可选）<span class="en">Budget Range (optional)</span></label>
-          <input id="b-budget" name="budget" type="text" placeholder="如：交通预算 5–8 万人民币">
+          <input id="b-budget" name="预算范围" type="text" placeholder="如：交通预算 5–8 万人民币">
         </div>
         <div class="field">
           <label for="b-deadline">方案交付时间要求 <span class="en">Plan Delivery Deadline</span></label>
-          <input id="b-deadline" name="deadline" type="text" placeholder="如：11 月 1 日前">
+          <input id="b-deadline" name="方案交付时间要求" type="text" placeholder="如：11 月 1 日前">
         </div>
         <div class="field" style="grid-column:1/-1;">
           <label for="b-extra">特殊要求 <span class="en">Special Requirements</span></label>
-          <textarea id="b-extra" name="extra" placeholder="如：需要双语协调、接送时段特殊、餐饮偏好等"></textarea>
+          <textarea id="b-extra" name="特殊要求" placeholder="如：需要双语协调、接送时段特殊、餐饮偏好等"></textarea>
         </div>
       </div>
       <button class="btn btn--gold" type="submit">提交需求</button>
       <div class="hint" style="margin-top:10px;">提交即表示同意我们就此项目与您联系。信息仅用于本次需求沟通。</div>
-      <div class="note">当前为演示版表单，暂未连接后台系统。正式提交请通过：<b>邮箱 busbang.will@gmail.com</b> 或 <b>电话/微信 199 1883 8887</b>。</div>
-      <div class="msg" role="status">感谢提交。当前为演示版网站，表单尚未接入后台——请将以上信息通过邮箱 <b>busbang.will@gmail.com</b> 或电话/微信 <b>199 1883 8887</b> 发送给我们，我们会尽快与您联系。</div>
     </form>
   </div>
 </section>
