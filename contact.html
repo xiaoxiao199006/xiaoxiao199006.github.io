@@ -75,19 +75,22 @@
       <h2>获取定制出行方案</h2>
       <p>填写基本信息，我们确认需求后与您联系。带 * 为必填。表单当前为演示版，正式提交请通过邮箱或电话。</p>
     </div>
-    <form class="form" data-demo novalidate>
+    <form class="form" action="https://formsubmit.co/busbang.will@gmail.com" method="POST">
+      <input type="hidden" name="_subject" value="新的网站咨询 - 经纬易行">
+      <input type="hidden" name="_next" value="https://jingweiyixing.com/contact.html?success=1">
+      <input type="hidden" name="_captcha" value="false">
       <div class="row row--2">
         <div class="field">
           <label for="c-name">姓名 / 名称 * <span class="en">Name</span></label>
-          <input id="c-name" name="name" type="text" required>
+          <input id="c-name" name="姓名" type="text" required>
         </div>
         <div class="field">
           <label for="c-contact">联系方式（电话/微信/邮箱）* <span class="en">Contact</span></label>
-          <input id="c-contact" name="contact" type="text" required>
+          <input id="c-contact" name="联系方式" type="text" required>
         </div>
         <div class="field">
           <label for="c-type">客户类型 * <span class="en">Client Type</span></label>
-          <select id="c-type" name="type" required>
+          <select id="c-type" name="客户类型" required>
             <option value="">请选择</option>
             <option>个人旅行 · Individual Traveler</option>
             <option>境外客户 · International Traveler</option>
@@ -97,25 +100,23 @@
         </div>
         <div class="field">
           <label for="c-dest">目的地 / 服务需求 * <span class="en">Destination / Need</span></label>
-          <input id="c-dest" name="dest" type="text" required placeholder="如：英国伦敦机场接送 / 张家界行程规划">
+          <input id="c-dest" name="目的地/服务需求" type="text" required placeholder="如：英国伦敦机场接送 / 张家界行程规划">
         </div>
         <div class="field">
           <label for="c-date">出行日期或时间范围 <span class="en">Dates</span></label>
-          <input id="c-date" name="date" type="text" placeholder="如：2026-12-01 至 12-08">
+          <input id="c-date" name="出行日期" type="text" placeholder="如：2026-12-01 至 12-08">
         </div>
         <div class="field">
           <label for="c-people">人数与预算（可选）<span class="en">Group Size / Budget</span></label>
-          <input id="c-people" name="people" type="text" placeholder="如：6 人，预算 3 万左右">
+          <input id="c-people" name="人数与预算" type="text" placeholder="如：6 人，预算 3 万左右">
         </div>
         <div class="field" style="grid-column:1/-1;">
           <label for="c-msg">需求描述 * <span class="en">Message</span></label>
-          <textarea id="c-msg" name="msg" required placeholder="请描述您的出行目的、想要解决的问题或需要比较的选项"></textarea>
+          <textarea id="c-msg" name="需求描述" required placeholder="请描述您的出行目的、想要解决的问题或需要比较的选项"></textarea>
         </div>
       </div>
       <button class="btn btn--gold" type="submit">提交需求</button>
       <div class="hint" style="margin-top:10px;">提交即表示同意我们就您的需求与您联系。信息仅用于本次沟通。</div>
-      <div class="note">当前为演示版表单，暂未连接后台系统。正式提交请通过：<b>邮箱 busbang.will@gmail.com</b> 或 <b>电话/微信 199 1883 8887</b>。</div>
-      <div class="msg" role="status">感谢提交。当前为演示版网站，表单尚未接入后台——请将以上信息通过邮箱 <b>busbang.will@gmail.com</b> 或电话/微信 <b>199 1883 8887</b> 发送给我们，我们会尽快与您联系。</div>
     </form>
   </div>
 </section>
