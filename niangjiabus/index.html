@@ -1,4 +1,147 @@
 <!doctype html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>娘家巴士｜异地婚礼娘家亲友出行</title><meta name="description" content="娘家巴士——经纬易行旗下婚礼品牌，为异地婚礼的娘家人提供专车接送、上宾计划与全程关怀服务。"><script>(function(){
+  function removeWatermark(){
+    try{
+      var wm=document.querySelector('MIAODA-WATERMARK');
+      if(wm){wm.remove();}
+      var dw=document.querySelector('[data-custom-element="doubao-watermark"]');
+      if(dw){dw.remove();}
+      var el=document.querySelector('div[doubao-watermark]');
+      if(el){el.remove();}
+    }catch(e){}
+  }
+  removeWatermark();
+  if(window.MutationObserver){
+    new MutationObserver(removeWatermark).observe(document.documentElement,{childList:true,subtree:true});
+  }
+  document.addEventListener('DOMContentLoaded',removeWatermark);
+  window.addEventListener('load',removeWatermark);
+  setTimeout(removeWatermark,1000);
+  setTimeout(removeWatermark,3000);
+})();</script><script>(function(){
+  function initReviewCarousel(){
+    var section=null;
+    var all=document.querySelectorAll('section');
+    for(var i=0;i<all.length;i++){
+      var t=all[i].textContent||'';
+      if(t.indexOf('来自全国各地娘家人')>-1){section=all[i];break;}
+    }
+    if(!section){return false;}
+    if(section.__carouselInit){return true;}
+    var grid=null;
+    var kids=section.querySelectorAll('div');
+    for(var i=0;i<kids.length;i++){
+      var c=kids[i].className||'';
+      if(c.indexOf('grid')>-1&&c.indexOf('grid-cols')>-1){grid=kids[i];break;}
+    }
+    if(!grid){return false;}
+    var cardList=Array.prototype.slice.call(grid.children).filter(function(el){return el.tagName==='ARTICLE'||(el.className||'').indexOf('rounded')>-1;});
+    if(cardList.length<3){return false;}
+    section.__carouselInit=true;
+
+    var moreBtn=null;
+    var after=grid.nextElementSibling;
+    if(after&&(after.textContent||'').indexOf('查看更多')>-1){moreBtn=after;}
+
+    var wrap=document.createElement('div');
+    wrap.style.cssText='position:relative;overflow:hidden;';
+    var track=document.createElement('div');
+    track.style.cssText='display:flex;gap:20px;transition:transform .6s ease;will-change:transform;';
+    cardList.forEach(function(c){track.appendChild(c);});
+    // 克隆副本实现无缝循环
+    var clones=cardList.map(function(c){return c.cloneNode(true);});
+    clones.forEach(function(c){track.appendChild(c);});
+    wrap.appendChild(track);
+    grid.style.display='none';
+    if(moreBtn){moreBtn.style.display='none';}
+    var insertPoint=grid.parentNode;
+    insertPoint.insertBefore(wrap,grid);
+
+    function layout(){
+      var w=section.offsetWidth||1200;
+      var visible=w>=1024?3:(w>=768?2:1);
+      var per;
+      if(w>=1024){per=(w-40-40)/3;}else if(w>=768){per=(w-30-20)/2;}else{per=w-20;}
+      var items=track.children;
+      for(var i=0;i<items.length;i++){items[i].style.width=per+'px';items[i].style.flex='0 0 auto';}
+      return {per:per,visible:visible,gap:20};
+    }
+    var L=layout();
+    window.addEventListener('resize',function(){L=layout();go(pos);});
+
+    function mkBtn(dir){
+      var b=document.createElement('button');
+      b.textContent=dir;
+      b.style.cssText='position:absolute;top:50%;transform:translateY(-50%);z-index:5;width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,.95);border:1px solid rgba(0,0,0,.1);box-shadow:0 2px 10px rgba(0,0,0,.1);cursor:pointer;font-size:20px;color:#c2410c;line-height:1;display:flex;align-items:center;justify-content:center;'+(dir==='‹'?'left:4px;':'right:4px;');
+      return b;
+    }
+    var prev=mkBtn('‹');var next=mkBtn('›');
+    wrap.appendChild(prev);wrap.appendChild(next);
+    var dotsWrap=document.createElement('div');
+    dotsWrap.style.cssText='display:flex;justify-content:center;gap:8px;margin-top:18px;';
+    var pageCount=cardList.length;
+    var dots=[];
+    for(var i=0;i<pageCount;i++){
+      var d=document.createElement('button');
+      d.style.cssText='width:9px;height:9px;border-radius:50%;border:none;background:rgba(194,65,12,.25);cursor:pointer;transition:background .3s;';
+      d.setAttribute('data-i',i);
+      dots.push(d);dotsWrap.appendChild(d);
+    }
+    wrap.appendChild(dotsWrap);
+
+    var pos=0;var timer=null;
+    var step=function(){return (L.per+L.gap)*L.visible;};
+    function update(){
+      track.style.transform='translateX('+(-pos*step())+'px)';
+      dots.forEach(function(d,idx){d.style.background=idx===pos?'#c2410c':'rgba(194,65,12,.25)';});
+    }
+    function go(n){
+      var max=cardList.length;
+      var target=n;
+      if(target>=max){
+        track.style.transition='none';
+        track.style.transform='translateX('+(-max*step())+'px)';
+        void track.offsetWidth;
+        track.style.transition='transform .6s ease';
+        target=0;
+      }else if(target<0){
+        track.style.transition='none';
+        track.style.transform='translateX(0px)';
+        void track.offsetWidth;
+        track.style.transition='transform .6s ease';
+        target=max-1;
+      }
+      pos=target;
+      update();
+    }
+    function auto(){
+      clearInterval(timer);
+      timer=setInterval(function(){go(pos+1);},4000);
+    }
+    prev.addEventListener('click',function(){go(pos-1);auto();});
+    next.addEventListener('click',function(){go(pos+1);auto();});
+    dots.forEach(function(d){d.addEventListener('click',function(){go(parseInt(d.getAttribute('data-i'),10));auto();});});
+    wrap.addEventListener('mouseenter',function(){clearInterval(timer);});
+    wrap.addEventListener('mouseleave',function(){auto();});
+    var startX=0;
+    wrap.addEventListener('touchstart',function(e){startX=e.touches[0].clientX;clearInterval(timer);},{passive:true});
+    wrap.addEventListener('touchend',function(e){
+      var dx=e.changedTouches[0].clientX-startX;
+      if(Math.abs(dx)>30){go(dx<0?pos+1:pos-1);}
+      auto();
+    },{passive:true});
+    update();
+    auto();
+    return true;
+  }
+  var tries=0;
+  function poll(){
+    tries++;
+    if(initReviewCarousel()){return;}
+    if(tries<40){setTimeout(poll,500);}
+  }
+  setTimeout(poll,1500);
+  window.addEventListener('load',function(){setTimeout(poll,500);});
+})();</script><script>(function(){
   var needsPolyfill=(function(){
     try{
       if(typeof crypto==="undefined"||typeof crypto.randomUUID!=="function")return true;
@@ -15,3 +158,4 @@
   var segs = window.location.pathname.split("/").filter(Boolean);
   window.__BASENAME__ = "/" + (segs[0] || "") + "/";
 })();</script><script type="module" crossorigin src="./assets/index-CFPzdwnb.v5.js"></script><link rel="modulepreload" crossorigin href="./assets/rolldown-runtime-B0Z9INg1.js"><link rel="modulepreload" crossorigin href="./assets/radix-DZAbjq8M.js"><link rel="modulepreload" crossorigin href="./assets/toolkit-Cve0GP4S.js"><link rel="stylesheet" crossorigin href="./assets/index-DyWvLLwO.css"><link rel="icon" href="./favicon.svg"></head><body><div id="root"></div></body></html>
+
