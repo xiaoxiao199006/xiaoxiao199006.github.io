@@ -143,9 +143,15 @@
   function poll(){
     tries++;
     if(initReviewCarousel()){return;}
-    if(tries<40){setTimeout(poll,500);}
+    if(tries<100){setTimeout(poll,800);}
   }
-  setTimeout(poll,1500);
+  setTimeout(poll,1000);
+  if(window.MutationObserver){
+    var obs=new MutationObserver(function(){
+      if(initReviewCarousel()){obs.disconnect();}
+    });
+    setTimeout(function(){obs.observe(document.body,{childList:true,subtree:true});},500);
+  }
   window.addEventListener('load',function(){setTimeout(poll,500);});
 })();</script><script>(function(){
   var needsPolyfill=(function(){
