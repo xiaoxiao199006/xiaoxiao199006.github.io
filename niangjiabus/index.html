@@ -31,7 +31,13 @@
     var kids=section.querySelectorAll('div');
     for(var i=0;i<kids.length;i++){
       var c=kids[i].className||'';
-      if(c.indexOf('grid')>-1&&c.indexOf('grid-cols')>-1){grid=kids[i];break;}
+      if(c.indexOf('grid-cols-3')>-1&&c.indexOf('lg:grid-cols-3')>-1){
+        var hasArticle=false;
+        for(var j=0;j<kids[i].children.length;j++){
+          if(kids[i].children[j].tagName==='ARTICLE'){hasArticle=true;break;}
+        }
+        if(hasArticle){grid=kids[i];break;}
+      }
     }
     if(!grid){return false;}
     var cardList=Array.prototype.slice.call(grid.children).filter(function(el){return el.tagName==='ARTICLE'||(el.className||'').indexOf('rounded')>-1;});
