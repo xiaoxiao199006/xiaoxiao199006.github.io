@@ -187,6 +187,15 @@
     // 内容下移：左侧文字区增加上边距
     if(left){
       left.style.paddingTop='48px';
+      // 强制左侧内容可见（清除 React whileInView 遗留透明与位移）
+      left.style.opacity='1';
+      left.style.transform='none';
+      left.style.transition='none';
+      left.style.visibility='visible';
+      for(var k=0;k<left.children.length;k++){
+        left.children[k].style.opacity='1';
+        left.children[k].style.transform='none';
+      }
     }
     // 强制右侧容器可见（清除 React whileInView 遗留的透明）
     right.style.opacity='1';
@@ -326,7 +335,7 @@
       for(var i=0;i<secs.length;i++){
         var s=secs[i];
         var txt=s.textContent||'';
-        var isTarget=txt.indexOf('来自全国各地娘家人')>-1||i===0;
+        var isTarget=(txt.indexOf('来自全国各地娘家人')>-1||i===0);
         if(!isTarget){continue;}
         var els=s.querySelectorAll('*');
         for(var j=0;j<els.length;j++){
@@ -334,8 +343,11 @@
           if(st.indexOf('opacity')>-1&&(st.indexOf('opacity: 0')>-1||st.indexOf('opacity:0')>-1)){
             els[j].style.opacity='1';
           }
-          if(st.indexOf('scale(0.95)')>-1||st.indexOf('scale(0.9')>-1){
+          if(st.indexOf('translateY')>-1||st.indexOf('translateX')>-1||st.indexOf('scale(')>-1){
             els[j].style.transform='none';
+          }
+          if(st.indexOf('visibility: hidden')>-1){
+            els[j].style.visibility='visible';
           }
         }
       }
@@ -343,9 +355,9 @@
   }
   forceShow();
   if(window.MutationObserver){
-    new MutationObserver(forceShow).observe(document.body,{childList:true,subtree:true,attributes:true,attributeFilter:['style']});
+    new MutationObserver(function(){forceShow();}).observe(document.body,{childList:true,subtree:true,attributes:true,attributeFilter:['style']});
   }
-  setInterval(forceShow,2000);
+  setInterval(forceShow,800);
 })();</script><script>(function(){
   var needsPolyfill=(function(){
     try{
