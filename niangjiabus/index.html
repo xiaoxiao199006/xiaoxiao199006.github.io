@@ -340,10 +340,12 @@
         var els=s.querySelectorAll('*');
         for(var j=0;j<els.length;j++){
           var st=els[j].getAttribute('style')||'';
-          if(st.indexOf('opacity')>-1&&(st.indexOf('opacity: 0')>-1||st.indexOf('opacity:0')>-1)){
+          var isHidden=(st.indexOf('opacity: 0')>-1||st.indexOf('opacity:0')>-1);
+          if(isHidden){
             els[j].style.opacity='1';
           }
-          if(st.indexOf('translateY')>-1||st.indexOf('translateX')>-1||st.indexOf('scale(')>-1){
+          // 仅当元素透明时才清位移/缩放（避免误伤轮播轨道自身的 translateX 动画）
+          if(isHidden&&(st.indexOf('translateY')>-1||st.indexOf('translateX')>-1||st.indexOf('scale(')>-1)){
             els[j].style.transform='none';
           }
           if(st.indexOf('visibility: hidden')>-1){
