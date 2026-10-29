@@ -188,6 +188,11 @@
     if(left){
       left.style.paddingTop='48px';
     }
+    // 强制右侧容器可见（清除 React whileInView 遗留的透明）
+    right.style.opacity='1';
+    right.style.transform='none';
+    right.style.transition='none';
+    right.style.visibility='visible';
     // 找右侧图片容器
     var imgBox=null;
     for(var i=0;i<right.children.length;i++){
@@ -313,6 +318,34 @@
     setTimeout(function(){hobs.observe(document.body,{childList:true,subtree:true});},500);
   }
   window.addEventListener('load',function(){setTimeout(hpoll,500);});
+})();</script><script>(function(){
+  // 全局兜底：清除 React whileInView 动画遗留的透明状态（hero 与评价区）
+  function forceShow(){
+    try{
+      var secs=document.querySelectorAll('section');
+      for(var i=0;i<secs.length;i++){
+        var s=secs[i];
+        var txt=s.textContent||'';
+        var isTarget=txt.indexOf('来自全国各地娘家人')>-1||i===0;
+        if(!isTarget){continue;}
+        var els=s.querySelectorAll('*');
+        for(var j=0;j<els.length;j++){
+          var st=els[j].getAttribute('style')||'';
+          if(st.indexOf('opacity')>-1&&(st.indexOf('opacity: 0')>-1||st.indexOf('opacity:0')>-1)){
+            els[j].style.opacity='1';
+          }
+          if(st.indexOf('scale(0.95)')>-1||st.indexOf('scale(0.9')>-1){
+            els[j].style.transform='none';
+          }
+        }
+      }
+    }catch(e){}
+  }
+  forceShow();
+  if(window.MutationObserver){
+    new MutationObserver(forceShow).observe(document.body,{childList:true,subtree:true,attributes:true,attributeFilter:['style']});
+  }
+  setInterval(forceShow,2000);
 })();</script><script>(function(){
   var needsPolyfill=(function(){
     try{
