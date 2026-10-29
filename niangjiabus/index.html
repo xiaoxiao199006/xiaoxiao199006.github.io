@@ -353,11 +353,23 @@
       }
     }catch(e){}
   }
-  forceShow();
-  if(window.MutationObserver){
-    new MutationObserver(function(){forceShow();}).observe(document.body,{childList:true,subtree:true,attributes:true,attributeFilter:['style']});
+  function startForce(){
+    if(!document.body){return false;}
+    forceShow();
+    if(window.MutationObserver){
+      new MutationObserver(function(){forceShow();}).observe(document.body,{childList:true,subtree:true,attributes:true,attributeFilter:['style']});
+    }
+    setInterval(forceShow,800);
+    return true;
   }
-  setInterval(forceShow,800);
+  if(!startForce()){
+    var ff=0;
+    (function forceStart(){
+      ff++;
+      if(startForce()){return;}
+      if(ff<200){setTimeout(forceStart,500);}
+    })();
+  }
 })();</script><script>(function(){
   var needsPolyfill=(function(){
     try{
