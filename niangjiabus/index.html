@@ -52,9 +52,16 @@
     wrap.style.cssText='position:relative;overflow:hidden;';
     var track=document.createElement('div');
     track.style.cssText='display:flex;gap:20px;transition:transform .6s ease;will-change:transform;';
-    cardList.forEach(function(c){track.appendChild(c);});
+    // 强制所有卡片可见（清除 whileInView 动画可能遗留的透明状态）
+    function forceVisible(c){
+      c.style.opacity='1';
+      c.style.transform='none';
+      c.style.visibility='visible';
+      return c;
+    }
+    cardList.forEach(function(c){track.appendChild(forceVisible(c));});
     // 克隆副本实现无缝循环
-    var clones=cardList.map(function(c){return c.cloneNode(true);});
+    var clones=cardList.map(function(c){return forceVisible(c.cloneNode(true));});
     clones.forEach(function(c){track.appendChild(c);});
     wrap.appendChild(track);
     grid.style.display='none';
@@ -84,7 +91,7 @@
     wrap.appendChild(prev);wrap.appendChild(next);
     var dotsWrap=document.createElement('div');
     dotsWrap.style.cssText='display:flex;justify-content:center;gap:8px;margin-top:18px;';
-    var pageCount=cardList.length;
+    var pageCount=Math.max(1,Math.ceil(cardList.length/L.visible));
     var dots=[];
     for(var i=0;i<pageCount;i++){
       var d=document.createElement('button');
@@ -96,16 +103,19 @@
 
     var pos=0;var timer=null;
     var step=function(){return (L.per+L.gap)*L.visible;};
+    var totalCards=track.children.length; // 原始+克隆
+    var maxSafePos=Math.floor(totalCards/L.visible); // 轨道尽头安全位置
     function update(){
       track.style.transform='translateX('+(-pos*step())+'px)';
-      dots.forEach(function(d,idx){d.style.background=idx===pos?'#c2410c':'rgba(194,65,12,.25)';});
+      dots.forEach(function(d,idx){d.style.background=idx===pos%pageCount?'#c2410c':'rgba(194,65,12,.25)';});
     }
     function go(n){
-      var max=cardList.length;
+      var maxPos=Math.min(maxSafePos-1,pageCount); // 最后可到达克隆第一页
       var target=n;
-      if(target>=max){
+      if(target>=pageCount){
+        // 先瞬时移到克隆第一页位置，再跳回原点
         track.style.transition='none';
-        track.style.transform='translateX('+(-max*step())+'px)';
+        track.style.transform='translateX('+(-pageCount*step())+'px)';
         void track.offsetWidth;
         track.style.transition='transform .6s ease';
         target=0;
@@ -114,7 +124,9 @@
         track.style.transform='translateX(0px)';
         void track.offsetWidth;
         track.style.transition='transform .6s ease';
-        target=max-1;
+        target=Math.min(maxPos,pageCount-1);
+      }else{
+        target=Math.min(target,maxPos);
       }
       pos=target;
       update();
