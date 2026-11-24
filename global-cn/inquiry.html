@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>联系询价 · 经纬易行全球行程定制</title>
+<meta name="description" content="通过微信、WhatsApp 或邮箱，把您的全球行程草稿或需求发给经纬易行行程管家，获取透明的定制报价。">
+<link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Serif+SC:wght@500;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body data-page="contact">
+
+<nav class="topbar">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="11" fill="none" stroke="#C9A96A" stroke-width="1.5"/><ellipse cx="16" cy="16" rx="4.5" ry="11" fill="none" stroke="#C9A96A" stroke-width="1"/><line x1="5" y1="16" x2="27" y2="16" stroke="#C9A96A" stroke-width="1"/><circle cx="16" cy="16" r="2.2" fill="#C9A96A"/></svg>
+      <span>经纬易行<small>全球行程定制</small></span>
+    </a>
+    <div class="nav" id="nav">
+      <a href="index.html" data-nav="home">首页</a>
+      <a href="catalog.html" data-nav="destinations">目的地</a>
+      <a href="favorites.html" data-nav="favorites" class="fav-link">收藏 <span id="fav-count">0</span></a>
+      <a href="planner.html" data-nav="plan">我的行程</a>
+      <a href="inquiry.html" data-nav="contact">联系我们</a>
+    </div>
+    <button class="nav-toggle" id="nav-toggle" type="button" aria-label="打开菜单">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+</nav>
+
+<header class="hero hero--sm">
+  <div class="wrap">
+    <span class="kicker">联系行程管家</span>
+    <h1>把行程草稿或需求发给我们</h1>
+    <p class="lead" style="margin-top:14px;">提供行程草稿、出行日期与同行人数；我们比价、确认资源，返回包含项、条件与注意事项清晰列明的方案。行程规划咨询免费，确认后的产品单独报价。</p>
+  </div>
+</header>
+
+<section class="section section--paper">
+  <div class="wrap">
+    <div class="ways" style="margin-bottom:30px;">
+      <a class="way" href="tel:+8619918838887">
+        <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 0 1-12.4 7.5L4 20l1-4.6A8.5 8.5 0 1 1 21 11.5z"/></svg></div>
+        <div><div class="lb">微信 / 电话</div><div class="val">+86 199 1883 8887</div><div class="ds">微信同号，可直接电话联系</div></div>
+      </a>
+      <a class="way" href="https://wa.me/8615116456929">
+        <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2zm4.5 14.2c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .1-1.7-.1-3.1-1-5.1-4.1-5.3-4.3-.1-.2-1.1-1.5-1.1-2.9 0-1.4.7-2 1-2.3.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.4l.9 2.1c.1.2.1.4 0 .6l-.4.6-.5.5c-.2.2-.3.4-.1.7.2.3.8 1.3 1.8 2.1 1.2 1.1 2.2 1.4 2.5 1.6.3.1.5.1.7-.1l1-1.2c.2-.3.4-.2.7-.1l2 1c.3.2.5.3.6.4 0 .2 0 .7-.3 1.2z"/></svg></div>
+        <div><div class="lb">WHATSAPP</div><div class="val">+86 151 1645 6929</div><div class="ds">境外联络与跨时区沟通</div></div>
+      </a>
+      <a class="way" href="mailto:wil@jingweiyixing.com">
+        <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></div>
+        <div><div class="lb">邮箱</div><div class="val">wil@jingweiyixing.com</div><div class="ds">发送行程文档或详细需求</div></div>
+      </a>
+    </div>
+
+    <form class="form" id="inquiry-form" data-demo>
+      <div class="row">
+        <div class="field">
+          <label for="f-name">姓名 <span style="font-weight:400;font-size:11.5px;color:var(--slate-soft);">必填</span></label>
+          <input id="f-name" type="text" required>
+        </div>
+        <div class="field">
+          <label for="f-contact">邮箱或 WhatsApp <span style="font-weight:400;font-size:11.5px;color:var(--slate-soft);">必填，便于回复</span></label>
+          <input id="f-contact" type="text" required>
+        </div>
+      </div>
+      <div class="row" style="margin-top:14px;grid-template-columns:1fr 1fr;">
+        <div class="field">
+          <label for="f-nationality">出发城市</label>
+          <input id="f-nationality" type="text" placeholder="如：长沙">
+        </div>
+        <div class="field">
+          <label for="f-group">同行人数</label>
+          <input id="f-group" type="text" placeholder="如：2 位成人，1 名儿童">
+        </div>
+      </div>
+      <div class="field" style="margin-top:14px;">
+        <label for="f-dates">期望出行日期</label>
+        <input id="f-dates" type="text" placeholder="如：2027 年 3 月 26–28 日">
+      </div>
+      <div class="field" style="margin-top:14px;">
+        <label for="f-msg">行程或需求说明</label>
+        <textarea id="f-msg" placeholder="可粘贴行程摘要、收藏的产品、兴趣偏好、预算区间及特殊需求。"></textarea>
+      </div>
+      <p class="hint" style="margin-top:10px;">本站为演示站点，表单不会发送到后台。提交后请复制您的信息，通过上方微信、WhatsApp 或邮箱联系我们，管家将回复定制报价。</p>
+      <button class="btn btn--gold" type="submit">整理我的询价</button>
+      <div class="msg" id="form-msg"></div>
+    </form>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="cols">
+      <div>
+        <h4>经纬易行 · 全球行程定制</h4>
+        <p>长沙经纬易行科技有限公司<br>行程规划与预订对接服务（非旅行社资质）。</p>
+      </div>
+      <div>
+        <h4>页面导航</h4>
+        <a href="index.html">首页</a> · <a href="catalog.html">目的地</a> · <a href="favorites.html">收藏</a><br>
+        <a href="planner.html">我的行程</a> · <a href="inquiry.html">联系我们</a> · <a href="../index.html">返回主站</a>
+      </div>
+      <div>
+        <h4>联系渠道</h4>
+        微信 / 电话：+86 199 1883 8887<br>
+        WhatsApp：+86 151 1645 6929<br>
+        邮箱：wil@jingweiyixing.com
+      </div>
+    </div>
+    <div class="bottom">© 2026 长沙经纬易行科技有限公司 · 本站为演示站点，所列产品与价格均为占位样例；最终产品、资源与报价以咨询确认为准。</div>
+  </div>
+</footer>
+
+<script src="assets/js/products.js"></script>
+<script src="assets/js/app.js"></script>
+<script>
+(function(){
+  var JW = window.JW;
+  var params = new URLSearchParams(location.search);
+  var msg = document.getElementById('f-msg');
+
+  /* 预填：?plan=1 带入行程摘要；?id= 带入单品 */
+  if (params.get('plan') === '1') {
+    var summary = JW.planSummary(JW.getPlan());
+    msg.value = summary + '\n\n请根据这份草稿行程为我出具定制报价。';
+  }
+  var pid = params.get('id');
+  if (pid) {
+    var p = JW.byId(pid);
+    if (p) {
+      msg.value += (msg.value ? '\n\n' : '') + '我想咨询：' + p.name + '（' + p.city + '）。 ' +
+        (p.price && p.price.fixed ? '标注 ¥' + Number(p.price.fixed).toLocaleString() + ' 起，常规区间 ' + p.price.range + '。' : '请为该项服务报价。');
+    }
+  }
+
+  var form = document.getElementById('inquiry-form');
+  var box = document.getElementById('form-msg');
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var name = document.getElementById('f-name').value.trim();
+    var contact = document.getElementById('f-contact').value.trim();
+    if (!name || !contact) { box.className = 'msg show'; box.innerHTML = '请填写姓名和可回复的联系方式。'; return; }
+    var text = form.querySelector('textarea').value;
+    box.className = 'msg show';
+    box.innerHTML = '<b>询价信息已整理好。</b> 请复制以下内容，通过微信 / 电话 <b>+86 199 1883 8887</b>、WhatsApp <b>+86 151 1645 6929</b> 或邮箱 <b>wil@jingweiyixing.com</b> 发给我们。<br><br>' +
+      '<b>姓名：</b> ' + JW.esc(name) + '<br><b>回复联系方式：</b> ' + JW.esc(contact) +
+      '<br><b>出发城市：</b> ' + JW.esc(document.getElementById('f-nationality').value) +
+      '<br><b>同行人数：</b> ' + JW.esc(document.getElementById('f-group').value) +
+      '<br><b>出行日期：</b> ' + JW.esc(document.getElementById('f-dates').value) +
+      '<br><b>需求说明：</b> ' + JW.esc(text);
+    if (navigator.clipboard) navigator.clipboard.writeText(box.innerText).catch(function(){});
+  });
+})();
+</script>
+</body>
+</html>
