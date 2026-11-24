@@ -117,6 +117,14 @@ img{max-width:100%;display:block;}
   margin-top:22px;font-size:15px;color:#D7E0E8;max-width:660px;line-height:2;font-weight:300;
 }
 .hero .cta{margin-top:34px;display:flex;gap:12px;flex-wrap:wrap;}
+.entry-duo{margin-top:22px;display:grid;grid-template-columns:1fr 1fr;gap:14px;max-width:760px;}
+.entry-card{display:flex;flex-direction:column;gap:6px;border:1px solid rgba(244,239,230,.28);border-radius:var(--radius);padding:18px 20px;background:rgba(8,28,44,.38);text-decoration:none;color:var(--ivory);transition:border-color .2s,transform .2s,background .2s;}
+.entry-card:hover{border-color:var(--gold);background:rgba(8,28,44,.55);transform:translateY(-2px);}
+.entry-tag{font-size:11px;letter-spacing:1.6px;color:var(--gold-soft);font-weight:700;}
+.entry-title{font-family:var(--serif);font-size:19px;font-weight:700;line-height:1.4;}
+.entry-sub{font-size:12.5px;color:#C7D2DC;line-height:1.7;}
+.entry-card--soon{opacity:.85;}
+@media (max-width:640px){.entry-duo{grid-template-columns:1fr;}}
 .hero--sm{padding:64px 0 52px;}
 .hero--sm h1{font-size:clamp(26px,4.6vw,40px);}
 
