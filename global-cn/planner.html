@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>我的行程 · 经纬易行全球行程定制</title>
+<link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Serif+SC:wght@500;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body data-page="plan">
+
+<nav class="topbar">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="11" fill="none" stroke="#C9A96A" stroke-width="1.5"/><ellipse cx="16" cy="16" rx="4.5" ry="11" fill="none" stroke="#C9A96A" stroke-width="1"/><line x1="5" y1="16" x2="27" y2="16" stroke="#C9A96A" stroke-width="1"/><circle cx="16" cy="16" r="2.2" fill="#C9A96A"/></svg>
+      <span>经纬易行<small>全球行程定制</small></span>
+    </a>
+    <div class="nav" id="nav">
+      <a href="index.html" data-nav="home">首页</a>
+      <a href="catalog.html" data-nav="destinations">目的地</a>
+      <a href="favorites.html" data-nav="favorites" class="fav-link">收藏 <span id="fav-count">0</span></a>
+      <a href="planner.html" data-nav="plan">我的行程</a>
+      <a href="inquiry.html" data-nav="contact">联系我们</a>
+    </div>
+    <button class="nav-toggle" id="nav-toggle" type="button" aria-label="打开菜单">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+</nav>
+
+<header class="hero hero--sm">
+  <div class="wrap">
+    <span class="kicker">行程搭建器</span>
+    <h1>自己组合每日行程</h1>
+    <p class="lead" style="margin-top:14px;">把产品加入行程；搭建器会提示时段冲突，酒店按晚挂入，单独门票不占行程时段。草稿搭好后发给我们获取报价。</p>
+  </div>
+</header>
+
+<section class="section section--paper">
+  <div class="wrap">
+    <div class="panel" style="margin-bottom:24px;">
+      <div class="plan-meta">
+        <div class="field">
+          <label for="plan-title">行程名称</label>
+          <input id="plan-title" type="text" placeholder="如：东京 · 北海道 8 日">
+        </div>
+        <div class="field" style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+          <div>
+            <label for="plan-start">出发日期</label>
+            <input id="plan-start" type="date">
+          </div>
+          <div>
+            <label for="plan-end">返程日期</label>
+            <input id="plan-end" type="date">
+          </div>
+        </div>
+      </div>
+      <div class="warn" id="plan-warn" hidden></div>
+    </div>
+
+    <div class="plan-layout">
+      <div>
+        <div class="sec-head" style="margin-bottom:18px;">
+          <div class="kicker">选品器</div>
+          <h2 style="font-size:20px;">可加入的产品</h2>
+        </div>
+        <div class="picker-list" id="picker-list"></div>
+      </div>
+
+      <div>
+        <div class="sec-head" style="margin-bottom:18px;">
+          <div class="kicker">行程草稿</div>
+          <h2 style="font-size:20px;">每日行程安排</h2>
+        </div>
+        <div id="days-list"></div>
+
+        <div class="panel" style="margin-top:18px;">
+          <h3>酒店（按晚挂）</h3>
+          <div id="hotel-list" style="margin-top:12px;"></div>
+        </div>
+
+        <div class="summary-box" style="margin-top:18px;">
+          <h3>行程摘要</h3>
+          <pre id="summary-text"></pre>
+          <div class="cta-row" style="margin-top:16px;">
+            <button class="btn btn--gold" id="btn-copy" type="button">复制摘要</button>
+            <button class="btn btn--ghost" id="btn-print" type="button">打印 / 存 PDF</button>
+            <a class="btn btn--ghost" href="inquiry.html?plan=1">发送给管家</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="cols">
+      <div>
+        <h4>经纬易行 · 全球行程定制</h4>
+        <p>长沙经纬易行科技有限公司<br>行程规划与预订对接服务（非旅行社资质）。</p>
+      </div>
+      <div>
+        <h4>页面导航</h4>
+        <a href="index.html">首页</a> · <a href="catalog.html">目的地</a> · <a href="favorites.html">收藏</a><br>
+        <a href="planner.html">我的行程</a> · <a href="inquiry.html">联系我们</a> · <a href="../index.html">返回主站</a>
+      </div>
+      <div>
+        <h4>联系渠道</h4>
+        微信 / 电话：+86 199 1883 8887<br>
+        WhatsApp：+86 151 1645 6929<br>
+        邮箱：wil@jingweiyixing.com
+      </div>
+    </div>
+    <div class="bottom">© 2026 长沙经纬易行科技有限公司 · 本站为演示站点，所列产品与价格均为占位样例；最终产品、资源与报价以咨询确认为准。</div>
+  </div>
+</footer>
+
+<script src="assets/js/products.js"></script>
+<script src="assets/js/app.js"></script>
+<script>
+(function(){
+  var P = window.PRODUCTS, JW = window.JW;
+  var plan = JW.getPlan();
+
+  var elTitle = document.getElementById('plan-title');
+  var elStart = document.getElementById('plan-start');
+  var elEnd = document.getElementById('plan-end');
+  var warn = document.getElementById('plan-warn');
+  var daysList = document.getElementById('days-list');
+  var hotelList = document.getElementById('hotel-list');
+  var picker = document.getElementById('picker-list');
+  var summary = document.getElementById('summary-text');
+
+  elTitle.value = plan.title || '';
+  elStart.value = plan.start || '';
+  elEnd.value = plan.end || '';
+
+  function showWarn(msg){
+    warn.hidden = !msg;
+    warn.textContent = msg || '';
+  }
+
+  /* ---------- 日期工具 ---------- */
+  function dateList(start, end){
+    var out = [];
+    if (!start) return out;
+    var s = new Date(start + 'T00:00:00'), e = end ? new Date(end + 'T00:00:00') : s;
+    if (e < s) e = s;
+    for (var d = new Date(s); d <= e; d.setDate(d.getDate() + 1)) {
+      out.push(d.toISOString().slice(0,10));
+    }
+    return out;
+  }
+
+  function rebuildDays(){
+    var dates = dateList(plan.start, plan.end);
+    var existing = {};
+    plan.days.forEach(function(d){ existing[d.date] = d.items; });
+    if (!dates.length) {
+      plan.days = [{ date: '', items: existing[''] || [] }];
+    } else {
+      plan.days = dates.map(function(dt){
+        return { date: dt, items: existing[dt] || [] };
+      });
+    }
+  }
+
+  function persist(){ JW.savePlan(plan); }
+
+  /* ---------- 渲染 ---------- */
+  function dayOptions(sel){
+    return plan.days.map(function(d, i){
+      var label = d.date ? ('第 ' + (i+1) + ' 天 · ' + d.date) : '未排日期';
+      return '<option value="' + i + '"' + (String(i) === String(sel) ? ' selected' : '') + '>' + JW.esc(label) + '</option>';
+    }).join('');
+  }
+
+  function renderPicker(){
+    var favIds = JW.getFavs();
+    var favs = favIds.map(JW.byId).filter(Boolean);
+    var others = P.filter(function(p){ return favIds.indexOf(p.id) < 0; });
+
+    function row(p, groupLabel){
+      if (p.cat === 'hotel') {
+        var defNight = plan.start || '';
+        return '<div class="picker-item" data-id="' + JW.esc(p.id) + '">' +
+          '<div class="pi-body"><div class="pi-name">' + JW.esc(p.name) + '</div><div class="pi-meta">' + JW.esc(p.city) + ' · 酒店 · 按晚挂</div></div>' +
+          '<input type="date" class="hotel-night-sel" value="' + JW.esc(defNight) + '" aria-label="入住晚">' +
+          '<button class="mini-btn add-hotel-btn" type="button" title="加入酒店列表">+</button></div>';
+      }
+      if (p.standalone) {
+        return '<div class="picker-item" data-id="' + JW.esc(p.id) + '">' +
+          '<div class="pi-body"><div class="pi-name">' + JW.esc(p.name) + '</div><div class="pi-meta">' + JW.esc(p.city) + ' · 单独门票</div></div>' +
+          '<a class="btn-line-sm" href="inquiry.html?id=' + JW.esc(p.id) + '">咨询购票</a></div>';
+      }
+      var slotLabel = JW.SLOT[p.tags.slot] || p.tags.slot;
+      var metaBits = [JW.esc(p.city), slotLabel === p.tags.dur ? JW.esc(p.tags.dur) : JW.esc(slotLabel + ' · ' + p.tags.dur)];
+      return '<div class="picker-item" data-id="' + JW.esc(p.id) + '">' +
+        '<div class="pi-body"><div class="pi-name">' + JW.esc(p.name) + '</div><div class="pi-meta">' + metaBits.join(' · ') + '</div></div>' +
+        '<select class="day-sel">' + dayOptions(0) + '</select>' +
+        '<button class="mini-btn add-btn" type="button" title="加入当天">+</button></div>';
+    }
+
+    var html = '';
+    if (favs.length) html += '<div class="meta-bit" style="margin:4px 0;">已收藏</div>' + favs.map(row).join('');
+    html += '<div class="meta-bit" style="margin:10px 0 4px;">全部产品</div>' + others.map(row).join('');
+    picker.innerHTML = html;
+  }
+
+  function renderDays(){
+    if (!plan.days.length) { daysList.innerHTML = '<p class="empty">先在上方设置出行日期，再生成每天安排。</p>'; return; }
+    daysList.innerHTML = plan.days.map(function(d, i){
+      var label = d.date ? ('第 ' + (i+1) + ' 天 · ' + d.date) : '未排日期';
+      var items = d.items.map(function(it, j){
+        var p = JW.byId(it.id);
+        if (!p) return '';
+        return '<div class="plan-item">' +
+          '<span class="pi-slot">' + JW.esc(JW.SLOT[p.tags.slot] || p.tags.slot) + '</span>' +
+          '<div class="pi-body"><div class="pi-name">' + JW.esc(p.name) + '</div><div class="pi-meta">' + JW.esc(p.city) + ' · ' + JW.esc(p.tags.dur) + '</div></div>' +
+          '<div class="pi-actions">' +
+            '<button class="mini-btn move-up" data-day="' + i + '" data-idx="' + j + '" title="上移">↑</button>' +
+            '<button class="mini-btn move-down" data-day="' + i + '" data-idx="' + j + '" title="下移">↓</button>' +
+            '<button class="mini-btn rm" data-day="' + i + '" data-idx="' + j + '" title="移除">✕</button>' +
+          '</div></div>';
+      }).join('');
+      return '<div class="day-col"><h3><span>' + JW.esc(label) + '</span><span class="meta-bit">' + d.items.length + ' 项</span></h3>' +
+        '<div class="day-items">' + (items || '<p class="empty" style="padding:10px 0;">当天暂无安排。</p>') + '</div></div>';
+    }).join('');
+  }
+
+  function renderHotels(){
+    if (!plan.hotels.length) {
+      hotelList.innerHTML = '<p class="empty" style="padding:10px 0;">还没有加入酒店；酒店产品在清单中按晚加入。</p>';
+      return;
+    }
+    hotelList.innerHTML = plan.hotels.map(function(h, i){
+      var p = JW.byId(h.id);
+      if (!p) return '';
+      return '<div class="hotel-row">' +
+        '<div class="pi-body"><div class="pi-name">' + JW.esc(p.name) + '</div><div class="pi-meta">' + JW.esc(p.city) + ' · 每晚</div></div>' +
+        '<input type="date" class="hotel-night" data-h="' + i + '" value="' + JW.esc(h.night) + '">' +
+        '<button class="mini-btn rm-hotel" data-h="' + i + '" title="移除">✕</button></div>';
+    }).join('');
+  }
+
+  function renderSummary(){
+    summary.textContent = JW.planSummary(plan);
+  }
+
+  function renderAll(){ renderPicker(); renderDays(); renderHotels(); renderSummary(); }
+
+  /* ---------- 操作 ---------- */
+  function addToDay(dayIdx, id){
+    var p = JW.byId(id);
+    if (!p) return;
+    var day = plan.days[dayIdx];
+    if (!day) return;
+    var conflict = JW.conflictOnDay(day, p);
+    if (conflict) { showWarn('无法加入：' + conflict + '。'); return; }
+    day.items.push({ id: id, slot: p.tags.slot });
+    persist(); showWarn(''); renderAll();
+  }
+
+  elTitle.addEventListener('input', function(){ plan.title = elTitle.value; persist(); renderSummary(); });
+  elStart.addEventListener('change', function(){ plan.start = elStart.value; rebuildDays(); persist(); renderAll(); });
+  elEnd.addEventListener('change', function(){ plan.end = elEnd.value; rebuildDays(); persist(); renderAll(); });
+
+  picker.addEventListener('click', function(e){
+    var addH = e.target.closest('.add-hotel-btn');
+    if (addH) {
+      var hrow = addH.closest('.picker-item');
+      var hid = hrow.getAttribute('data-id');
+      var nightInp = hrow.querySelector('.hotel-night-sel');
+      var dup = plan.hotels.some(function(h){ return h.id === hid; });
+      if (dup) { showWarn('该酒店已在酒店列表中。'); return; }
+      plan.hotels.push({ id: hid, night: nightInp ? nightInp.value : '' });
+      persist(); showWarn(''); renderAll();
+      return;
+    }
+    var add = e.target.closest('.add-btn');
+    if (!add) return;
+    var row = add.closest('.picker-item');
+    var id = row.getAttribute('data-id');
+    var sel = row.querySelector('.day-sel');
+    addToDay(Number(sel.value), id);
+  });
+
+  daysList.addEventListener('click', function(e){
+    var rm = e.target.closest('.rm');
+    var up = e.target.closest('.move-up');
+    var dn = e.target.closest('.move-down');
+    if (rm) {
+      var d = Number(rm.getAttribute('data-day')), i = Number(rm.getAttribute('data-idx'));
+      plan.days[d].items.splice(i, 1); persist(); renderAll();
+    } else if (up) {
+      var d2 = Number(up.getAttribute('data-day')), i2 = Number(up.getAttribute('data-idx'));
+      if (i2 > 0) { var it = plan.days[d2].items.splice(i2,1)[0]; plan.days[d2].items.splice(i2-1,0,it); persist(); renderAll(); }
+    } else if (dn) {
+      var d3 = Number(dn.getAttribute('data-day')), i3 = Number(dn.getAttribute('data-idx'));
+      if (i3 < plan.days[d3].items.length - 1) { var it2 = plan.days[d3].items.splice(i3,1)[0]; plan.days[d3].items.splice(i3+1,0,it2); persist(); renderAll(); }
+    }
+  });
+
+  hotelList.addEventListener('click', function(e){
+    var rm = e.target.closest('.rm-hotel');
+    if (rm) { plan.hotels.splice(Number(rm.getAttribute('data-h')), 1); persist(); renderAll(); }
+  });
+  hotelList.addEventListener('change', function(e){
+    var inp = e.target.closest('.hotel-night');
+    if (inp) { plan.hotels[Number(inp.getAttribute('data-h'))].night = inp.value; persist(); renderSummary(); }
+  });
+
+  document.getElementById('btn-copy').addEventListener('click', function(){
+    var text = summary.textContent;
+    if (navigator.clipboard) navigator.clipboard.writeText(text).then(function(){ document.getElementById('btn-copy').textContent = '已复制 ✓'; });
+  });
+  document.getElementById('btn-print').addEventListener('click', function(){ window.print(); });
+
+  /* ---------- URL：?add=id ---------- */
+  var addId = new URLSearchParams(location.search).get('add');
+  rebuildDays();
+  if (addId) {
+    var p = JW.byId(addId);
+    if (p && !p.standalone && p.cat !== 'hotel') {
+      var conflict = JW.conflictOnDay(plan.days[0], p);
+      if (!conflict) { plan.days[0].items.push({ id: p.id, slot: p.tags.slot }); persist(); }
+      else showWarn('提示：' + conflict + '。核对日期后可把它移到其他天。');
+    } else if (p && p.cat === 'hotel') {
+      if (!plan.hotels.some(function(h){ return h.id === p.id; })) {
+        plan.hotels.push({ id: p.id, night: plan.start || '' });
+        persist();
+      }
+      showWarn('酒店“' + p.name + '”已加入酒店列表，请在下方选择入住晚。');
+    } else if (p && p.standalone) {
+      showWarn('“' + p.name + '”为单独门票，不占用行程时段，请在咨询页单独申请。');
+    }
+  }
+  renderAll();
+})();
+</script>
+</body>
+</html>
