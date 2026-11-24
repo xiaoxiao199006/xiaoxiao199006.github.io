@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>我的收藏 · 经纬易行全球行程定制</title>
+<link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Serif+SC:wght@500;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body data-page="favorites">
+
+<nav class="topbar">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="11" fill="none" stroke="#C9A96A" stroke-width="1.5"/><ellipse cx="16" cy="16" rx="4.5" ry="11" fill="none" stroke="#C9A96A" stroke-width="1"/><line x1="5" y1="16" x2="27" y2="16" stroke="#C9A96A" stroke-width="1"/><circle cx="16" cy="16" r="2.2" fill="#C9A96A"/></svg>
+      <span>经纬易行<small>全球行程定制</small></span>
+    </a>
+    <div class="nav" id="nav">
+      <a href="index.html" data-nav="home">首页</a>
+      <a href="catalog.html" data-nav="destinations">目的地</a>
+      <a href="favorites.html" data-nav="favorites" class="fav-link">收藏 <span id="fav-count">0</span></a>
+      <a href="planner.html" data-nav="plan">我的行程</a>
+      <a href="inquiry.html" data-nav="contact">联系我们</a>
+    </div>
+    <button class="nav-toggle" id="nav-toggle" type="button" aria-label="打开菜单">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+</nav>
+
+<header class="hero hero--sm">
+  <div class="wrap">
+    <span class="kicker">收藏夹</span>
+    <h1>我收藏的产品</h1>
+    <p class="lead" style="margin-top:14px;">收藏内容保存在本机浏览器中；行程搭好后，发给行程管家获取定制报价。</p>
+  </div>
+</header>
+
+<section class="section section--paper">
+  <div class="wrap">
+    <div class="cta-row" style="margin-top:0;margin-bottom:24px;">
+      <a class="btn btn--navy" href="planner.html">前往我的行程</a>
+      <a class="btn btn--line" href="catalog.html">继续浏览</a>
+    </div>
+    <div class="grid grid--3" id="fav-grid"></div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="cols">
+      <div>
+        <h4>经纬易行 · 全球行程定制</h4>
+        <p>长沙经纬易行科技有限公司<br>行程规划与预订对接服务（非旅行社资质）。</p>
+      </div>
+      <div>
+        <h4>页面导航</h4>
+        <a href="index.html">首页</a> · <a href="catalog.html">目的地</a> · <a href="favorites.html">收藏</a><br>
+        <a href="planner.html">我的行程</a> · <a href="inquiry.html">联系我们</a> · <a href="../index.html">返回主站</a>
+      </div>
+      <div>
+        <h4>联系渠道</h4>
+        微信 / 电话：+86 199 1883 8887<br>
+        WhatsApp：+86 151 1645 6929<br>
+        邮箱：wil@jingweiyixing.com
+      </div>
+    </div>
+    <div class="bottom">© 2026 长沙经纬易行科技有限公司 · 本站为演示站点，所列产品与价格均为占位样例；最终产品、资源与报价以咨询确认为准。</div>
+  </div>
+</footer>
+
+<script src="assets/js/products.js"></script>
+<script src="assets/js/app.js"></script>
+<script>
+(function(){
+  var JW = window.JW;
+  var grid = document.getElementById('fav-grid');
+  function render(){
+    var ids = JW.getFavs();
+    var list = ids.map(JW.byId).filter(Boolean);
+    if (!list.length) {
+      grid.innerHTML = '<p class="empty">还没有收藏。先去目的地清单逛逛，点 ♡ 收藏喜欢的产品。</p>';
+      return;
+    }
+    JW.renderCards(grid, list);
+  }
+  render();
+  grid.addEventListener('click', function(e){
+    if (e.target.closest('[data-fav]')) setTimeout(render, 0);
+  });
+})();
+</script>
+</body>
+</html>
