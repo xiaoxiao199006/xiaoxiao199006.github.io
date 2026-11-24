@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Favorites · Jingwei Yixing China Travel Custom</title>
+<link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Serif+SC:wght@500;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body data-page="favorites">
+
+<nav class="topbar">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="11" fill="none" stroke="#C9A96A" stroke-width="1.5"/><ellipse cx="16" cy="16" rx="4.5" ry="11" fill="none" stroke="#C9A96A" stroke-width="1"/><line x1="5" y1="16" x2="27" y2="16" stroke="#C9A96A" stroke-width="1"/><circle cx="16" cy="16" r="2.2" fill="#C9A96A"/></svg>
+      <span>Jingwei Yixing<small>CHINA TRAVEL CUSTOM</small></span>
+    </a>
+    <div class="nav" id="nav">
+      <a href="index.html" data-nav="home">Home</a>
+      <a href="catalog.html" data-nav="destinations">Destinations</a>
+      <a href="favorites.html" data-nav="favorites" class="fav-link">Favorites <span id="fav-count">0</span></a>
+      <a href="planner.html" data-nav="plan">My Plan</a>
+      <a href="inquiry.html" data-nav="contact">Contact</a>
+    </div>
+    <button class="nav-toggle" id="nav-toggle" type="button" aria-label="Open menu">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+</nav>
+
+<header class="hero hero--sm">
+  <div class="wrap">
+    <span class="kicker">FAVORITES</span>
+    <h1>Your saved experiences</h1>
+    <p class="lead" style="margin-top:14px;">Saved items are kept in this browser on your device. When your plan is ready, send it to our concierge for a quote.</p>
+  </div>
+</header>
+
+<section class="section section--paper">
+  <div class="wrap">
+    <div class="cta-row" style="margin-top:0;margin-bottom:24px;">
+      <a class="btn btn--navy" href="planner.html">Go to My Plan</a>
+      <a class="btn btn--line" href="catalog.html">Browse More</a>
+    </div>
+    <div class="grid grid--3" id="fav-grid"></div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="cols">
+      <div>
+        <h4>Jingwei Yixing · China Travel Custom</h4>
+        <p>Changsha Jingwei Yixing Technology Co., Ltd.<br>Travel planning &amp; booking coordination (not a travel agency).</p>
+      </div>
+      <div>
+        <h4>Pages</h4>
+        <a href="index.html">Home</a> · <a href="catalog.html">Destinations</a> · <a href="favorites.html">Favorites</a><br>
+        <a href="planner.html">My Plan</a> · <a href="inquiry.html">Contact</a> · <a href="../index.html">Main Site</a>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        WeChat / Phone: +86 199 1883 8887<br>
+        WhatsApp: +86 151 1645 6929<br>
+        Email: wil@jingweiyixing.com
+      </div>
+    </div>
+    <div class="bottom">© 2026 Changsha Jingwei Yixing Technology Co., Ltd. · Listings and prices on this demo site are samples; final products, availability and quotes are confirmed on inquiry.</div>
+  </div>
+</footer>
+
+<script src="assets/js/products.js"></script>
+<script src="assets/js/app.js"></script>
+<script>
+(function(){
+  var JW = window.JW;
+  var grid = document.getElementById('fav-grid');
+  function render(){
+    var ids = JW.getFavs();
+    var list = ids.map(JW.byId).filter(Boolean);
+    if (!list.length) {
+      grid.innerHTML = '<p class="empty">No favorites yet. Browse the catalog and tap ♡ Save on experiences you like.</p>';
+      return;
+    }
+    JW.renderCards(grid, list);
+  }
+  render();
+  grid.addEventListener('click', function(e){
+    if (e.target.closest('[data-fav]')) setTimeout(render, 0);
+  });
+})();
+</script>
+</body>
+</html>
