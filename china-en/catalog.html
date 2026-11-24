@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>All Experiences · Jingwei Yixing China Travel Custom</title>
+<meta name="description" content="Browse China tours, airport transfers, private charter cars, hotels, company and university visits, guides and add-on services by city, category, age and duration.">
+<link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Serif+SC:wght@500;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body data-page="destinations">
+
+<nav class="topbar">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="11" fill="none" stroke="#C9A96A" stroke-width="1.5"/><ellipse cx="16" cy="16" rx="4.5" ry="11" fill="none" stroke="#C9A96A" stroke-width="1"/><line x1="5" y1="16" x2="27" y2="16" stroke="#C9A96A" stroke-width="1"/><circle cx="16" cy="16" r="2.2" fill="#C9A96A"/></svg>
+      <span>Jingwei Yixing<small>CHINA TRAVEL CUSTOM</small></span>
+    </a>
+    <div class="nav" id="nav">
+      <a href="index.html" data-nav="home">Home</a>
+      <a href="catalog.html" data-nav="destinations">Destinations</a>
+      <a href="favorites.html" data-nav="favorites" class="fav-link">Favorites <span id="fav-count">0</span></a>
+      <a href="planner.html" data-nav="plan">My Plan</a>
+      <a href="inquiry.html" data-nav="contact">Contact</a>
+    </div>
+    <button class="nav-toggle" id="nav-toggle" type="button" aria-label="Open menu">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+</nav>
+
+<header class="hero hero--sm">
+  <div class="wrap">
+    <span class="kicker">CATALOG</span>
+    <h1>All Experiences in China</h1>
+    <p class="lead" style="margin-top:14px;">Filter by destination, service type, suitable age and duration. Save the ones you like, then arrange them in your own plan.</p>
+  </div>
+</header>
+
+<section class="section section--paper">
+  <div class="wrap">
+    <div class="filters">
+      <div class="fgroup">
+        <label for="f-region">Destination / Region</label>
+        <select id="f-region"></select>
+      </div>
+      <div class="fgroup">
+        <label for="f-cat">Category</label>
+        <select id="f-cat"></select>
+      </div>
+      <div class="fgroup">
+        <label for="f-age">Suitable for</label>
+        <select id="f-age"></select>
+      </div>
+      <div class="fgroup">
+        <label for="f-q">Search</label>
+        <input id="f-q" type="text" placeholder="e.g. panda, Great Wall, transfer">
+      </div>
+    </div>
+    <p class="filter-count" id="filter-count"></p>
+    <div class="grid grid--3" id="catalog-grid"></div>
+
+    <div class="panel" style="margin-top:30px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;">
+      <div>
+        <h3>Can't find it on the list?</h3>
+        <p style="margin-top:6px;color:var(--slate);max-width:560px;">Tell us your dates, city and needs — we source any product or service nationwide, from venues, guides and cars to business and campus visits.</p>
+      </div>
+      <a class="btn btn--gold" href="inquiry.html">Send Your Requirements</a>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="cols">
+      <div>
+        <h4>Jingwei Yixing · China Travel Custom</h4>
+        <p>Changsha Jingwei Yixing Technology Co., Ltd.<br>Travel planning &amp; booking coordination (not a travel agency).</p>
+      </div>
+      <div>
+        <h4>Pages</h4>
+        <a href="index.html">Home</a> · <a href="catalog.html">Destinations</a> · <a href="favorites.html">Favorites</a><br>
+        <a href="planner.html">My Plan</a> · <a href="inquiry.html">Contact</a> · <a href="../index.html">Main Site</a>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        WeChat / Phone: +86 199 1883 8887<br>
+        WhatsApp: +86 151 1645 6929<br>
+        Email: wil@jingweiyixing.com
+      </div>
+    </div>
+    <div class="bottom">© 2026 Changsha Jingwei Yixing Technology Co., Ltd. · Listings and prices on this demo site are samples; final products, availability and quotes are confirmed on inquiry.</div>
+  </div>
+</footer>
+
+<script src="assets/js/products.js"></script>
+<script src="assets/js/app.js"></script>
+<script>
+(function(){
+  var P = window.PRODUCTS, JW = window.JW;
+  var grid = document.getElementById('catalog-grid');
+  var selR = document.getElementById('f-region');
+  var selC = document.getElementById('f-cat');
+  var selA = document.getElementById('f-age');
+  var q = document.getElementById('f-q');
+  var count = document.getElementById('filter-count');
+
+  function opts(sel, values, labels, allLabel){
+    sel.innerHTML = '<option value="">' + allLabel + '</option>' +
+      values.map(function(v){ return '<option value="' + JW.esc(v) + '">' + JW.esc(labels[v] || v) + '</option>'; }).join('');
+  }
+
+  var regionOrder = [];
+  P.forEach(function(p){ if (regionOrder.indexOf(p.region) < 0) regionOrder.push(p.region); });
+  opts(selR, regionOrder, {}, 'All regions');
+  var catLabels = Object.keys(JW.CAT).reduce(function(o,k){ o[k]=JW.CAT[k].label; return o; },{});
+  opts(selC, Object.keys(JW.CAT), catLabels, 'All categories');
+  opts(selA, Object.keys(JW.AGE), JW.AGE, 'All ages');
+
+  var params = new URLSearchParams(location.search);
+  if (params.get('region')) selR.value = params.get('region');
+  if (params.get('cat')) selC.value = params.get('cat');
+
+  function apply(){
+    var r = selR.value, c = selC.value, a = selA.value, kw = q.value.trim().toLowerCase();
+    var list = P.filter(function(p){
+      if (r && p.region !== r) return false;
+      if (c && p.cat !== c) return false;
+      if (a && p.tags.age !== a) return false;
+      if (kw && (p.name + ' ' + p.desc + ' ' + p.city).toLowerCase().indexOf(kw) < 0) return false;
+      return true;
+    });
+    count.textContent = list.length + ' experience' + (list.length === 1 ? '' : 's') + ' found';
+    JW.renderCards(grid, list, 'No experiences match these filters yet.');
+  }
+  [selR, selC, selA].forEach(function(el){ el.addEventListener('change', apply); });
+  q.addEventListener('input', apply);
+  apply();
+})();
+</script>
+</body>
+</html>
