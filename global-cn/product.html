@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>产品详情 · 经纬易行全球行程定制</title>
+<link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Serif+SC:wght@500;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body data-page="destinations">
+
+<nav class="topbar">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="11" fill="none" stroke="#C9A96A" stroke-width="1.5"/><ellipse cx="16" cy="16" rx="4.5" ry="11" fill="none" stroke="#C9A96A" stroke-width="1"/><line x1="5" y1="16" x2="27" y2="16" stroke="#C9A96A" stroke-width="1"/><circle cx="16" cy="16" r="2.2" fill="#C9A96A"/></svg>
+      <span>经纬易行<small>全球行程定制</small></span>
+    </a>
+    <div class="nav" id="nav">
+      <a href="index.html" data-nav="home">首页</a>
+      <a href="catalog.html" data-nav="destinations">目的地</a>
+      <a href="favorites.html" data-nav="favorites" class="fav-link">收藏 <span id="fav-count">0</span></a>
+      <a href="planner.html" data-nav="plan">我的行程</a>
+      <a href="inquiry.html" data-nav="contact">联系我们</a>
+    </div>
+    <button class="nav-toggle" id="nav-toggle" type="button" aria-label="打开菜单">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+</nav>
+
+<section class="section section--paper">
+  <div class="wrap" id="detail-root"></div>
+</section>
+
+<section class="section section--soft">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="kicker">相关推荐</div>
+      <h2>您可能还感兴趣</h2>
+    </div>
+    <div class="related-grid" id="related-grid"></div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="cols">
+      <div>
+        <h4>经纬易行 · 全球行程定制</h4>
+        <p>长沙经纬易行科技有限公司<br>行程规划与预订对接服务（非旅行社资质）。</p>
+      </div>
+      <div>
+        <h4>页面导航</h4>
+        <a href="index.html">首页</a> · <a href="catalog.html">目的地</a> · <a href="favorites.html">收藏</a><br>
+        <a href="planner.html">我的行程</a> · <a href="inquiry.html">联系我们</a> · <a href="../index.html">返回主站</a>
+      </div>
+      <div>
+        <h4>联系渠道</h4>
+        微信 / 电话：+86 199 1883 8887<br>
+        WhatsApp：+86 151 1645 6929<br>
+        邮箱：wil@jingweiyixing.com
+      </div>
+    </div>
+    <div class="bottom">© 2026 长沙经纬易行科技有限公司 · 本站为演示站点，所列产品与价格均为占位样例；最终产品、资源与报价以咨询确认为准。</div>
+  </div>
+</footer>
+
+<script src="assets/js/products.js"></script>
+<script src="assets/js/app.js"></script>
+<script>
+(function(){
+  var P = window.PRODUCTS, JW = window.JW;
+  var id = new URLSearchParams(location.search).get('id');
+  var p = id ? JW.byId(id) : null;
+  var root = document.getElementById('detail-root');
+  var rel = document.getElementById('related-grid');
+
+  if (!p) {
+    root.innerHTML = '<div class="empty">未找到该产品。<a href="catalog.html">浏览全部目的地</a>。</div>';
+    rel.innerHTML = '';
+    return;
+  }
+
+  var fav = JW.isFav(p.id);
+  var incl = (p.included || []).map(function(x){ return '<li>' + JW.esc(x) + '</li>'; }).join('');
+  var excl = (p.excluded || []).map(function(x){ return '<li>' + JW.esc(x) + '</li>'; }).join('');
+
+  root.innerHTML =
+    '<nav style="font-size:12.5px;color:var(--slate-soft);margin-bottom:18px;"><a href="index.html">首页</a> · <a href="catalog.html">目的地</a> · <a href="catalog.html?region=' + encodeURIComponent(p.region) + '">' + JW.esc(p.region) + '</a></nav>' +
+    '<div class="detail">' +
+      '<div class="gallery ph--' + p.cat + '"><div class="ph"><span class="media-icon">' + JW.catIcon(p.cat) + '</span><div class="media-city">' + JW.esc(p.city) + '</div><div class="media-cat">' + JW.esc(JW.CAT[p.cat].label) + '</div></div></div>' +
+      '<div class="side">' +
+        '<div>' + JW.starsHTML(p.tags.stars) + (p.standalone ? ' <span class="tag tag--plain">仅门票/咨询</span>' : '') + '</div>' +
+        '<h1>' + JW.esc(p.name) + '</h1>' +
+        JW.metaHTML(p) +
+        '<p style="margin-top:14px;">' + JW.esc(p.desc) + '</p>' +
+        '<div class="panel" style="margin-top:16px;">' + JW.priceHTML(p) + '</div>' +
+        '<div class="cta-row" style="margin-top:16px;">' +
+          '<button class="btn-fav' + (fav ? ' on' : '') + '" data-fav="' + JW.esc(p.id) + '">' + (fav ? '♥ 已收藏' : '♡ 收藏') + '</button>' +
+          (p.standalone
+            ? '<a class="btn btn--line" href="inquiry.html?id=' + JW.esc(p.id) + '">单独咨询购票</a>'
+            : p.cat === 'hotel'
+              ? '<a class="btn btn--gold" href="planner.html?add=' + JW.esc(p.id) + '">加入酒店列表</a>'
+              : '<a class="btn btn--gold" href="planner.html?add=' + JW.esc(p.id) + '">加入我的行程</a>') +
+        '</div>' +
+      '</div>' +
+    '</div>' +
+    '<div class="grid grid--2" style="margin-top:24px;gap:16px;">' +
+      '<div class="panel"><h3>费用包含</h3><ul class="fact-list">' + incl + '</ul></div>' +
+      '<div class="panel"><h3>费用不含</h3><ul class="fact-list">' + excl + '</ul></div>' +
+    '</div>' +
+    (p.note ? '<div class="note-box"><b>出行须知：</b> ' + JW.esc(p.note) + '</div>' : '');
+
+  /* 相关推荐：同目的地优先，再看同人群、同品类，排除自身，最多 3 条 */
+  var rels = P.filter(function(x){ return x.id !== p.id; })
+    .map(function(x){
+      var score = (x.continent === p.continent ? 1 : 0) + (x.region === p.region ? 2 : 0) + (x.tags.age === p.tags.age ? 1 : 0) + (x.cat === p.cat ? 1 : 0);
+      return { x: x, score: score };
+    })
+    .filter(function(r){ return r.score > 0; })
+    .sort(function(a,b){ return b.score - a.score; })
+    .slice(0, 3).map(function(r){ return r.x; });
+  JW.renderCards(rel, rels, '');
+})();
+</script>
+</body>
+</html>
