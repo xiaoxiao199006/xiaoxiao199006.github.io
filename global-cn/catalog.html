@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>全部目的地 · 经纬易行全球行程定制</title>
+<meta name="description" content="按大洲、目的地、品类、适合人群与时长筛选全球用车、酒店、景点项目、企业院校参访及加项服务，收藏后组合成自己的行程。">
+<link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Serif+SC:wght@500;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body data-page="destinations">
+
+<nav class="topbar">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="11" fill="none" stroke="#C9A96A" stroke-width="1.5"/><ellipse cx="16" cy="16" rx="4.5" ry="11" fill="none" stroke="#C9A96A" stroke-width="1"/><line x1="5" y1="16" x2="27" y2="16" stroke="#C9A96A" stroke-width="1"/><circle cx="16" cy="16" r="2.2" fill="#C9A96A"/></svg>
+      <span>经纬易行<small>全球行程定制</small></span>
+    </a>
+    <div class="nav" id="nav">
+      <a href="index.html" data-nav="home">首页</a>
+      <a href="catalog.html" data-nav="destinations">目的地</a>
+      <a href="favorites.html" data-nav="favorites" class="fav-link">收藏 <span id="fav-count">0</span></a>
+      <a href="planner.html" data-nav="plan">我的行程</a>
+      <a href="inquiry.html" data-nav="contact">联系我们</a>
+    </div>
+    <button class="nav-toggle" id="nav-toggle" type="button" aria-label="打开菜单">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+</nav>
+
+<header class="hero hero--sm">
+  <div class="wrap">
+    <span class="kicker">目的地清单</span>
+    <h1>全球产品总览</h1>
+    <p class="lead" style="margin-top:14px;">按大洲、目的地、服务品类、适合人群筛选；收藏喜欢的产品，再到搭建器里组合成自己的行程。</p>
+  </div>
+</header>
+
+<section class="section section--paper">
+  <div class="wrap">
+    <div class="filters">
+      <div class="fgroup">
+        <label for="f-continent">大洲</label>
+        <select id="f-continent"></select>
+      </div>
+      <div class="fgroup">
+        <label for="f-region">目的地 / 国家城市</label>
+        <select id="f-region"></select>
+      </div>
+      <div class="fgroup">
+        <label for="f-cat">服务品类</label>
+        <select id="f-cat"></select>
+      </div>
+      <div class="fgroup">
+        <label for="f-age">适合人群</label>
+        <select id="f-age"></select>
+      </div>
+      <div class="fgroup">
+        <label for="f-q">关键词搜索</label>
+        <input id="f-q" type="text" placeholder="如：邮轮、雪山、接机、参访">
+      </div>
+    </div>
+    <p class="filter-count" id="filter-count"></p>
+    <div class="grid grid--3" id="catalog-grid"></div>
+
+    <div class="panel" style="margin-top:30px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;">
+      <div>
+        <h3>清单里没找到？</h3>
+        <p style="margin-top:6px;color:var(--slate);max-width:560px;">告诉我们出行日期、目的地与具体需求——场地、向导、用车、商务与院校参访等各类资源，均可全球代找对接。</p>
+      </div>
+      <a class="btn btn--gold" href="inquiry.html">发送需求</a>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="cols">
+      <div>
+        <h4>经纬易行 · 全球行程定制</h4>
+        <p>长沙经纬易行科技有限公司<br>行程规划与预订对接服务（非旅行社资质）。</p>
+      </div>
+      <div>
+        <h4>页面导航</h4>
+        <a href="index.html">首页</a> · <a href="catalog.html">目的地</a> · <a href="favorites.html">收藏</a><br>
+        <a href="planner.html">我的行程</a> · <a href="inquiry.html">联系我们</a> · <a href="../index.html">返回主站</a>
+      </div>
+      <div>
+        <h4>联系渠道</h4>
+        微信 / 电话：+86 199 1883 8887<br>
+        WhatsApp：+86 151 1645 6929<br>
+        邮箱：wil@jingweiyixing.com
+      </div>
+    </div>
+    <div class="bottom">© 2026 长沙经纬易行科技有限公司 · 本站为演示站点，所列产品与价格均为占位样例；最终产品、资源与报价以咨询确认为准。</div>
+  </div>
+</footer>
+
+<script src="assets/js/products.js"></script>
+<script src="assets/js/app.js"></script>
+<script>
+(function(){
+  var P = window.PRODUCTS, JW = window.JW;
+  var grid = document.getElementById('catalog-grid');
+  var selCt = document.getElementById('f-continent');
+  var selR = document.getElementById('f-region');
+  var selC = document.getElementById('f-cat');
+  var selA = document.getElementById('f-age');
+  var q = document.getElementById('f-q');
+  var count = document.getElementById('filter-count');
+
+  function opts(sel, values, labels, allLabel){
+    sel.innerHTML = '<option value="">' + allLabel + '</option>' +
+      values.map(function(v){ return '<option value="' + JW.esc(v) + '">' + JW.esc(labels[v] || v) + '</option>'; }).join('');
+  }
+
+  var continentOrder = [];
+  P.forEach(function(p){ if (continentOrder.indexOf(p.continent) < 0) continentOrder.push(p.continent); });
+  opts(selCt, continentOrder, {}, '全部大洲');
+
+  var regionOrder = [];
+  P.forEach(function(p){ if (regionOrder.indexOf(p.region) < 0) regionOrder.push(p.region); });
+  opts(selR, regionOrder, {}, '全部目的地');
+
+  var catLabels = Object.keys(JW.CAT).reduce(function(o,k){ o[k]=JW.CAT[k].label; return o; },{});
+  opts(selC, Object.keys(JW.CAT), catLabels, '全部品类');
+  opts(selA, Object.keys(JW.AGE), JW.AGE, '全部人群');
+
+  var params = new URLSearchParams(location.search);
+  if (params.get('continent')) selCt.value = params.get('continent');
+  if (params.get('region')) selR.value = params.get('region');
+  if (params.get('cat')) selC.value = params.get('cat');
+
+  function apply(){
+    var ct = selCt.value, r = selR.value, c = selC.value, a = selA.value, kw = q.value.trim().toLowerCase();
+    var list = P.filter(function(p){
+      if (ct && p.continent !== ct) return false;
+      if (r && p.region !== r) return false;
+      if (c && p.cat !== c) return false;
+      if (a && p.tags.age !== a) return false;
+      if (kw && (p.name + ' ' + p.desc + ' ' + p.city).toLowerCase().indexOf(kw) < 0) return false;
+      return true;
+    });
+    count.textContent = '共 ' + list.length + ' 项产品';
+    JW.renderCards(grid, list, '暂无符合筛选条件的产品。');
+  }
+  [selCt, selR, selC, selA].forEach(function(el){ el.addEventListener('change', apply); });
+  q.addEventListener('input', apply);
+  apply();
+})();
+</script>
+</body>
+</html>
