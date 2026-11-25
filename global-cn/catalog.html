@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>全部目的地 · 经纬易行全球行程定制</title>
-<meta name="description" content="按大洲、目的地、品类、适合人群与时长筛选全球用车、酒店、景点项目、企业院校参访及加项服务，收藏后组合成自己的行程。">
+<meta name="description" content="按大洲、国家、城市与服务品类浏览全球用车、酒店、景点项目、企业院校参访及加项服务，收藏后组合成自己的行程。">
 <link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Serif+SC:wght@500;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap">
 <link rel="stylesheet" href="assets/css/style.css">
 </head>
@@ -33,7 +33,7 @@
   <div class="wrap">
     <span class="kicker">目的地清单</span>
     <h1>全球产品总览</h1>
-    <p class="lead" style="margin-top:14px;">按大洲、目的地、服务品类、适合人群筛选；收藏喜欢的产品，再到搭建器里组合成自己的行程。</p>
+    <p class="lead" style="margin-top:14px;">先选大洲、国家与城市，再按用车、酒店、景点项目、企业参访、院校参访等品类分别查看；收藏喜欢的产品，再到搭建器里组合成自己的行程。</p>
   </div>
 </header>
 
@@ -45,8 +45,12 @@
         <select id="f-continent"></select>
       </div>
       <div class="fgroup">
-        <label for="f-region">目的地 / 国家城市</label>
-        <select id="f-region"></select>
+        <label for="f-country">国家</label>
+        <select id="f-country"></select>
+      </div>
+      <div class="fgroup">
+        <label for="f-city">城市 / 区域</label>
+        <select id="f-city"></select>
       </div>
       <div class="fgroup">
         <label for="f-cat">服务品类</label>
@@ -62,7 +66,7 @@
       </div>
     </div>
     <p class="filter-count" id="filter-count"></p>
-    <div class="grid grid--3" id="catalog-grid"></div>
+    <div id="catalog-root"></div>
 
     <div class="panel" style="margin-top:30px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;">
       <div>
@@ -102,50 +106,135 @@
 <script>
 (function(){
   var P = window.PRODUCTS, JW = window.JW;
-  var grid = document.getElementById('catalog-grid');
+  var root = document.getElementById('catalog-root');
   var selCt = document.getElementById('f-continent');
-  var selR = document.getElementById('f-region');
+  var selCo = document.getElementById('f-country');
+  var selCi = document.getElementById('f-city');
   var selC = document.getElementById('f-cat');
   var selA = document.getElementById('f-age');
   var q = document.getElementById('f-q');
   var count = document.getElementById('filter-count');
 
-  function opts(sel, values, labels, allLabel){
+  /* 品类独立模块：顺序固定，用车、酒店、景点、企业参访、院校参访、加项各自成块 */
+  var MODULES = [
+    { key: 'transfer', label: '接送机', desc: '机场举牌接送，跟踪航班动态，按车型与行李安排车辆。' },
+    { key: 'car',      label: '包车',   desc: '按小时或全天包车，轿车、商务车与中巴，适配观光、商务与团队。' },
+    { key: 'hotel',    label: '酒店',   desc: '四星、五星与精品酒店，按晚挂入每一站行程。' },
+    { key: 'attraction', label: '景点 · 项目', desc: '导游观光、一日游、门票与文化体验，按时段排入行程。' },
+    { key: 'corp',     label: '企业参访', desc: '科技园区、创新集群与企业展厅，按对方接待审批安排。' },
+    { key: 'univ',     label: '院校参访 · 游学', desc: '知名大学校园参观与交流，按校方访客政策预约安排。' },
+    { key: 'other',    label: '加项服务', desc: '餐饮、地陪、翻译、签证协助、贵宾厅、选座与行程规划等。' }
+  ];
+
+  function fillSelect(sel, values, allLabel){
     sel.innerHTML = '<option value="">' + allLabel + '</option>' +
-      values.map(function(v){ return '<option value="' + JW.esc(v) + '">' + JW.esc(labels[v] || v) + '</option>'; }).join('');
+      values.map(function(v){ return '<option value="' + JW.esc(v) + '">' + JW.esc(v) + '</option>'; }).join('');
+  }
+  function distinct(list, fn){
+    var out = [];
+    list.forEach(function(x){ var v = fn(x); if (out.indexOf(v) < 0) out.push(v); });
+    return out;
   }
 
-  var continentOrder = [];
-  P.forEach(function(p){ if (continentOrder.indexOf(p.continent) < 0) continentOrder.push(p.continent); });
-  opts(selCt, continentOrder, {}, '全部大洲');
+  /* 大洲 / 国家 / 城市 级联选项 */
+  function refreshCountry(){
+    var ct = selCt.value;
+    var pool = P.filter(function(p){ return !ct || p.continent === ct; });
+    fillSelect(selCo, distinct(pool, function(p){ return p.country; }), '全部国家');
+    refreshCity();
+  }
+  function refreshCity(){
+    var ct = selCt.value, co = selCo.value;
+    var pool = P.filter(function(p){
+      return (!ct || p.continent === ct) && (!co || p.country === co);
+    });
+    fillSelect(selCi, distinct(pool, function(p){ return p.city; }), '全部城市 / 区域');
+  }
 
-  var regionOrder = [];
-  P.forEach(function(p){ if (regionOrder.indexOf(p.region) < 0) regionOrder.push(p.region); });
-  opts(selR, regionOrder, {}, '全部目的地');
+  fillSelect(selCt, distinct(P, function(p){ return p.continent; }), '全部大洲');
+  selC.innerHTML = '<option value="">全部品类</option>' +
+    MODULES.map(function(m){ return '<option value="' + m.key + '">' + JW.esc(m.label) + '</option>'; }).join('');
+  selA.innerHTML = '<option value="">全部人群</option>' +
+    Object.keys(JW.AGE).map(function(k){ return '<option value="' + k + '">' + JW.esc(JW.AGE[k]) + '</option>'; }).join('');
+  refreshCountry();
 
-  var catLabels = Object.keys(JW.CAT).reduce(function(o,k){ o[k]=JW.CAT[k].label; return o; },{});
-  opts(selC, Object.keys(JW.CAT), catLabels, '全部品类');
-  opts(selA, Object.keys(JW.AGE), JW.AGE, '全部人群');
-
+  /* URL 参数：continent / country / city / cat；兼容旧的 region=国家 · 城市 */
   var params = new URLSearchParams(location.search);
   if (params.get('continent')) selCt.value = params.get('continent');
-  if (params.get('region')) selR.value = params.get('region');
+  if (params.get('country')) selCo.value = params.get('country');
+  if (params.get('city')) selCi.value = params.get('city');
   if (params.get('cat')) selC.value = params.get('cat');
+  var region = params.get('region');
+  if (region && region.indexOf(' · ') > -1){
+    var parts = region.split(' · ');
+    refreshCountry();
+    selCo.value = parts[0]; refreshCity(); selCi.value = parts[1];
+  } else {
+    refreshCountry();
+    if (params.get('country')) selCo.value = params.get('country');
+    refreshCity();
+    if (params.get('city')) selCi.value = params.get('city');
+  }
 
-  function apply(){
-    var ct = selCt.value, r = selR.value, c = selC.value, a = selA.value, kw = q.value.trim().toLowerCase();
-    var list = P.filter(function(p){
+  function filtered(){
+    var ct = selCt.value, co = selCo.value, ci = selCi.value,
+        cat = selC.value, age = selA.value, kw = q.value.trim().toLowerCase();
+    return P.filter(function(p){
       if (ct && p.continent !== ct) return false;
-      if (r && p.region !== r) return false;
-      if (c && p.cat !== c) return false;
-      if (a && p.tags.age !== a) return false;
-      if (kw && (p.name + ' ' + p.desc + ' ' + p.city).toLowerCase().indexOf(kw) < 0) return false;
+      if (co && p.country !== co) return false;
+      if (ci && p.city !== ci) return false;
+      if (cat && p.cat !== cat) return false;
+      if (age && p.tags.age !== age) return false;
+      if (kw && (p.name + ' ' + p.desc + ' ' + p.city + ' ' + p.country).toLowerCase().indexOf(kw) < 0) return false;
       return true;
     });
-    count.textContent = '共 ' + list.length + ' 项产品';
-    JW.renderCards(grid, list, '暂无符合筛选条件的产品。');
   }
-  [selCt, selR, selC, selA].forEach(function(el){ el.addEventListener('change', apply); });
+
+  function render(list){
+    count.textContent = '共 ' + list.length + ' 项产品';
+    if (!list.length){
+      root.innerHTML = '<p class="empty">暂无符合筛选条件的产品。</p>';
+      return;
+    }
+    /* 按 大洲 → 国家 → 城市 分组，保持数据顺序 */
+    var groups = [], gmap = {};
+    list.forEach(function(p){
+      var key = p.continent + '||' + p.country + '||' + p.city;
+      if (!gmap[key]){
+        gmap[key] = { continent: p.continent, country: p.country, city: p.city, items: [] };
+        groups.push(gmap[key]);
+      }
+      gmap[key].items.push(p);
+    });
+
+    var html = '';
+    groups.forEach(function(g){
+      html += '<div class="dest-group">';
+      html += '<div class="dest-geo"><span class="geo-crumb">' + JW.esc(g.continent) + '</span>' +
+        '<h2>' + JW.esc(g.country) + ' · ' + JW.esc(g.city) + '</h2>' +
+        '<span class="geo-count">共 ' + g.items.length + ' 项</span></div>';
+      MODULES.forEach(function(m){
+        var items = g.items.filter(function(x){ return x.cat === m.key; });
+        if (!items.length) return;
+        html += '<div class="cat-module">';
+        html += '<div class="cat-module-head"><span class="cm-icon">' + JW.catIcon(m.key) + '</span>' +
+          '<h3>' + JW.esc(m.label) + '</h3><span class="cm-count">' + items.length + ' 项</span>' +
+          '<span class="cm-desc">' + JW.esc(m.desc) + '</span></div>';
+        html += '<div class="grid grid--3">' + items.map(function(p){ return JW.cardHTML(p); }).join('') + '</div>';
+        html += '</div>';
+      });
+      html += '</div>';
+    });
+    root.innerHTML = html;
+  }
+
+  function apply(){ render(filtered()); }
+
+  selCt.addEventListener('change', function(){ refreshCountry(); apply(); });
+  selCo.addEventListener('change', function(){ refreshCity(); apply(); });
+  selCi.addEventListener('change', apply);
+  selC.addEventListener('change', apply);
+  selA.addEventListener('change', apply);
   q.addEventListener('input', apply);
   apply();
 })();
