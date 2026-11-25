@@ -133,6 +133,20 @@ img{max-width:100%;display:block;}
 .filters select,.filters input{width:100%;font-family:var(--sans);font-size:15px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--ivory);color:var(--ink);}
 .filter-count{font-size:13px;color:var(--slate);margin-bottom:14px;}
 
+/* ---------- destination groups & category modules ---------- */
+.dest-group{margin-bottom:44px;}
+.dest-geo{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin:30px 0 6px;padding-bottom:10px;border-bottom:1px solid var(--line);}
+.dest-geo .geo-crumb{font-size:12px;letter-spacing:1.5px;color:var(--gold);font-weight:700;}
+.dest-geo h2{font-family:var(--serif);font-size:23px;color:var(--navy-deep);}
+.dest-geo .geo-count{font-size:12.5px;color:var(--slate-soft);}
+.cat-module{margin-top:26px;}
+.cat-module-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px;padding-left:12px;border-left:3px solid var(--gold);}
+.cat-module-head .cm-icon{color:var(--gold);display:flex;flex:none;}
+.cat-module-head h3{font-size:16.5px;color:var(--navy-deep);}
+.cat-module-head .cm-count{font-size:12px;color:var(--slate-soft);}
+.cat-module-head .cm-desc{flex-basis:100%;font-size:12.5px;color:var(--slate);padding-left:0;}
+.cat-module .grid{margin-top:0;}
+
 /* ---------- region tiles ---------- */
 .region-grid{display:grid;gap:16px;grid-template-columns:1fr;}
 .region-tile{position:relative;border-radius:var(--radius);overflow:hidden;min-height:150px;padding:22px;color:var(--ivory);text-decoration:none;display:flex;flex-direction:column;justify-content:flex-end;}
@@ -218,7 +232,7 @@ img{max-width:100%;display:block;}
   .detail{grid-template-columns:1.15fr .85fr;align-items:start;}
   .related-grid{grid-template-columns:repeat(3,1fr);}
   .plan-layout{grid-template-columns:1fr 1.2fr;}
-  .filters{grid-template-columns:repeat(4,1fr);align-items:end;}
+  .filters{grid-template-columns:repeat(3,1fr);align-items:end;}
   .ways{grid-template-columns:repeat(3,1fr);}
   .footer .cols{grid-template-columns:repeat(3,1fr);}
   .promise-row{grid-template-columns:repeat(3,1fr);}
