@@ -127,10 +127,14 @@ img{max-width:100%;display:block;}
 .empty{padding:40px 0;text-align:center;color:var(--slate-soft);}
 
 /* ---------- filter bar ---------- */
-.filters{display:grid;gap:14px;background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:18px;margin-bottom:28px;}
-.filters .fgroup{display:flex;flex-direction:column;gap:6px;}
+.filters{display:flex;flex-direction:column;gap:16px;background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:20px;margin-bottom:28px;}
+.filters .fgroup{display:flex;flex-direction:column;gap:8px;}
 .filters label{font-size:12px;font-weight:700;color:var(--navy-deep);letter-spacing:.5px;}
-.filters select,.filters input{width:100%;font-family:var(--sans);font-size:15px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--ivory);color:var(--ink);}
+.filters input{width:100%;max-width:340px;font-family:var(--sans);font-size:15px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--ivory);color:var(--ink);}
+.chip-row{display:flex;flex-wrap:wrap;gap:8px;}
+.chip{font-family:var(--sans);font-size:13px;line-height:1;padding:9px 15px;border:1px solid var(--line);border-radius:999px;background:var(--ivory);color:var(--navy);cursor:pointer;transition:border-color .15s,color .15s,background .15s,font-weight .15s;}
+.chip:hover{border-color:var(--gold);color:var(--gold);}
+.chip.on{background:var(--gold);border-color:var(--gold);color:var(--navy-deep);font-weight:700;}
 .filter-count{font-size:13px;color:var(--slate);margin-bottom:14px;}
 
 /* ---------- destination groups & category modules ---------- */
@@ -232,7 +236,6 @@ img{max-width:100%;display:block;}
   .detail{grid-template-columns:1.15fr .85fr;align-items:start;}
   .related-grid{grid-template-columns:repeat(3,1fr);}
   .plan-layout{grid-template-columns:1fr 1.2fr;}
-  .filters{grid-template-columns:repeat(3,1fr);align-items:end;}
   .ways{grid-template-columns:repeat(3,1fr);}
   .footer .cols{grid-template-columns:repeat(3,1fr);}
   .promise-row{grid-template-columns:repeat(3,1fr);}
