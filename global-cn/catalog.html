@@ -106,6 +106,8 @@
 <script>
 (function(){
   var P = window.PRODUCTS, JW = window.JW;
+  var D = (window.DESTINATIONS || []).map(function(t){ return { continent: t[0], country: t[1], city: t[2] }; });
+  var ALL = P.concat(D);
   var root = document.getElementById('catalog-root');
   var rowCt = document.getElementById('chips-continent');
   var rowCo = document.getElementById('chips-country');
@@ -155,14 +157,14 @@
   }
 
   function countryPool(){
-    return P.filter(function(p){ return !state.continent || p.continent === state.continent; });
+    return ALL.filter(function(p){ return !state.continent || p.continent === state.continent; });
   }
   function cityPool(){
     return countryPool().filter(function(p){ return !state.country || p.country === state.country; });
   }
 
   function renderGeoRows(){
-    renderRow(rowCt, distinct(P, function(p){ return p.continent; }), null, state.continent, '全部大洲', function(v){
+    renderRow(rowCt, distinct(ALL, function(p){ return p.continent; }), null, state.continent, '全部大洲', function(v){
       state.continent = v; state.country = ''; state.city = '';
       renderGeoRows(); apply();
     });
@@ -222,7 +224,8 @@
   function render(list){
     count.textContent = '共 ' + list.length + ' 项产品';
     if (!list.length){
-      root.innerHTML = '<p class="empty">暂无符合筛选条件的产品。</p>';
+      root.innerHTML = '<p class="empty">该目的地线路正在整理中，可先发送出行日期与需求，由管家全球代找对接。</p>' +
+        '<p style="margin-top:14px;"><a class="btn btn--gold" href="inquiry.html">发送需求</a></p>';
       return;
     }
     /* 按 大洲 → 国家 → 城市 分组，保持数据顺序 */
