@@ -119,18 +119,17 @@
 
   var state = { continent: '', country: '', city: '', cat: '', age: '' };
 
-  /* 品类独立模块：顺序固定，用车、酒店、景点、企业参访、院校参访、加项各自成块 */
+  /* 品类独立模块：顺序固定，景点项目在前，酒店、用车（接送机+包车）、参访与加项在后 */
   var MODULES = [
-    { key: 'transfer', label: '接送机', desc: '机场举牌接送，跟踪航班动态，按车型与行李安排车辆。' },
-    { key: 'car',      label: '包车',   desc: '按小时或全天包车，轿车、商务车与中巴，适配观光、商务与团队。' },
-    { key: 'hotel',    label: '酒店',   desc: '四星、五星与精品酒店，按晚挂入每一站行程。' },
-    { key: 'attraction', label: '景点 · 项目', desc: '导游观光、一日游、门票与文化体验，按时段排入行程。' },
-    { key: 'corp',     label: '企业参访', desc: '科技园区、创新集群与企业展厅，按对方接待审批安排。' },
-    { key: 'univ',     label: '院校参访 · 游学', desc: '知名大学校园参观与交流，按校方访客政策预约安排。' },
-    { key: 'other',    label: '加项服务', desc: '餐饮、地陪、翻译、签证协助、贵宾厅、选座与行程规划等。' }
+    { id: 'attraction', keys: ['attraction'], label: '景点 · 项目', desc: '导游观光、一日游、门票与文化体验，按时段排入行程。', icon: 'attraction' },
+    { id: 'hotel',      keys: ['hotel'],      label: '酒店',   desc: '四星、五星与精品酒店，按晚挂入每一站行程。', icon: 'hotel' },
+    { id: 'vehicle',    keys: ['transfer', 'car'], label: '用车', desc: '机场接送与包车，按车型、人数与行程安排车辆。', icon: 'car' },
+    { id: 'corp',       keys: ['corp'],      label: '企业参访', desc: '科技园区、创新集群与企业展厅，按对方接待审批安排。', icon: 'corp' },
+    { id: 'univ',       keys: ['univ'],       label: '院校参访 · 游学', desc: '知名大学校园参观与交流，按校方访客政策预约安排。', icon: 'univ' },
+    { id: 'other',      keys: ['other'],      label: '加项服务', desc: '餐饮、地陪、翻译、签证协助、贵宾厅、选座与行程规划等。', icon: 'other' }
   ];
-  var catLabels = {};
-  MODULES.forEach(function(m){ catLabels[m.key] = m.label; });
+  var catLabels = {}, moduleById = {};
+  MODULES.forEach(function(m){ catLabels[m.id] = m.label; moduleById[m.id] = m; });
 
   function distinct(list, fn){
     var out = [];
@@ -178,7 +177,7 @@
   }
 
   renderGeoRows();
-  renderRow(rowC, MODULES.map(function(m){ return m.key; }), catLabels, state.cat, '全部品类', function(v){
+  renderRow(rowC, MODULES.map(function(m){ return m.id; }), catLabels, state.cat, '全部品类', function(v){
     state.cat = v; apply();
   });
   renderRow(rowA, Object.keys(JW.AGE), JW.AGE, state.age, '全部人群', function(v){
@@ -191,7 +190,8 @@
     if (params.get('continent')) state.continent = params.get('continent');
     if (params.get('country')) state.country = params.get('country');
     if (params.get('city')) state.city = params.get('city');
-    if (params.get('cat')) state.cat = params.get('cat');
+    var legacyCat = params.get('cat');
+    state.cat = (legacyCat === 'transfer' || legacyCat === 'car') ? 'vehicle' : (legacyCat || '');
     if (params.get('age')) state.age = params.get('age');
     var region = params.get('region');
     if (region && region.indexOf(' · ') > -1){
@@ -201,7 +201,7 @@
   }
   applyParams();
   renderGeoRows();
-  renderRow(rowC, MODULES.map(function(m){ return m.key; }), catLabels, state.cat, '全部品类', function(v){
+  renderRow(rowC, MODULES.map(function(m){ return m.id; }), catLabels, state.cat, '全部品类', function(v){
     state.cat = v; apply();
   });
   renderRow(rowA, Object.keys(JW.AGE), JW.AGE, state.age, '全部人群', function(v){
@@ -214,7 +214,10 @@
       if (state.continent && p.continent !== state.continent) return false;
       if (state.country && p.country !== state.country) return false;
       if (state.city && p.city !== state.city) return false;
-      if (state.cat && p.cat !== state.cat) return false;
+      if (state.cat){
+        var mod = moduleById[state.cat];
+        if (!mod || mod.keys.indexOf(p.cat) < 0) return false;
+      }
       if (state.age && p.tags.age !== state.age) return false;
       if (kw && (p.name + ' ' + p.desc + ' ' + p.city + ' ' + p.country).toLowerCase().indexOf(kw) < 0) return false;
       return true;
@@ -246,10 +249,10 @@
         '<h2>' + JW.esc(g.country) + ' · ' + JW.esc(g.city) + '</h2>' +
         '<span class="geo-count">共 ' + g.items.length + ' 项</span></div>';
       MODULES.forEach(function(m){
-        var items = g.items.filter(function(x){ return x.cat === m.key; });
+        var items = g.items.filter(function(x){ return m.keys.indexOf(x.cat) >= 0; });
         if (!items.length) return;
         html += '<div class="cat-module">';
-        html += '<div class="cat-module-head"><span class="cm-icon">' + JW.catIcon(m.key) + '</span>' +
+        html += '<div class="cat-module-head"><span class="cm-icon">' + JW.catIcon(m.icon) + '</span>' +
           '<h3>' + JW.esc(m.label) + '</h3><span class="cm-count">' + items.length + ' 项</span>' +
           '<span class="cm-desc">' + JW.esc(m.desc) + '</span></div>';
         html += '<div class="grid grid--3">' + items.map(function(p){ return JW.cardHTML(p); }).join('') + '</div>';
