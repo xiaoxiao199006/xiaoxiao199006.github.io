@@ -197,18 +197,17 @@
 
   /* 服务品类 */
   var services = [
-    { cat:'transfer', name:'接送机', desc:'主要机场私人接机送机，举牌等候，可跟踪航班动态。' },
-    { cat:'car', name:'包车', desc:'按小时或全天包车，轿车、商务车与中巴，适配观光、商务与团队。' },
-    { cat:'hotel', name:'酒店', desc:'精选四星、五星与精品酒店，按晚挂入每一站行程。' },
-    { cat:'attraction', name:'景点/项目', desc:'导游观光、一日游、门票与文化体验，按时段排入行程。' },
-    { cat:'corp', name:'企业参访', desc:'科技园区、创新集群与企业展厅，按对方接待审批安排。' },
-    { cat:'univ', name:'院校参访', desc:'知名大学校园参访与交流，按校方访客政策预约安排。' },
-    { cat:'other', name:'加项服务', desc:'餐饮、地陪、翻译、签证协助、贵宾厅、选座与行程规划等。' }
+    { cat:'attraction', icon:'attraction', name:'景点/项目', desc:'导游观光、一日游、门票与文化体验，按时段排入行程。' },
+    { cat:'hotel', icon:'hotel', name:'酒店', desc:'精选四星、五星与精品酒店，按晚挂入每一站行程。' },
+    { cat:'vehicle', icon:'car', name:'用车', desc:'机场接送与包车，按车型、人数与行程安排车辆。' },
+    { cat:'corp', icon:'corp', name:'企业参访', desc:'科技园区、创新集群与企业展厅，按对方接待审批安排。' },
+    { cat:'univ', icon:'univ', name:'院校参访', desc:'知名大学校园参访与交流，按校方访客政策预约安排。' },
+    { cat:'other', icon:'other', name:'加项服务', desc:'餐饮、地陪、翻译、签证协助、贵宾厅、选座与行程规划等。' }
   ];
   var sg = document.getElementById('service-grid');
   sg.innerHTML = services.map(function(s){
     return '<a class="card card--dark" href="catalog.html?cat=' + s.cat + '" style="text-decoration:none;">' +
-      '<div class="ic">' + JW.catIcon(s.cat) + '</div>' +
+      '<div class="ic">' + JW.catIcon(s.icon) + '</div>' +
       '<h3>' + JW.esc(s.name) + '</h3><p>' + JW.esc(s.desc) + '</p></a>';
   }).join('');
 })();
