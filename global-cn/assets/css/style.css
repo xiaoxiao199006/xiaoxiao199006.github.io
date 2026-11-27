@@ -142,6 +142,15 @@ img{max-width:100%;display:block;}
 .chip.on{background:var(--gold);border-color:var(--gold);color:var(--navy-deep);font-weight:700;}
 .filter-count{font-size:13px;color:var(--slate);margin-bottom:14px;}
 
+/* ---------- filter accordion（默认收起，点击分类头展开） ---------- */
+.fgroup-head{display:flex;align-items:center;gap:8px;width:100%;background:none;border:none;padding:0;cursor:pointer;font-family:var(--sans);font-size:12px;font-weight:700;color:var(--navy-deep);letter-spacing:.5px;}
+.fgroup-head .f-title{flex:0 0 auto;}
+.fgroup-head .f-active{flex:1 1 auto;font-weight:400;color:var(--gold);letter-spacing:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.fgroup-head .f-arrow{flex:0 0 auto;color:var(--gold);font-size:11px;transition:transform .18s;}
+.fgroup.open .f-arrow{transform:rotate(180deg);}
+.fgroup:not(.open) .chip-row{display:none;}
+.fgroup:not(.open).fgroup--search input{display:none;}
+
 /* ---------- destination groups & category modules ---------- */
 .dest-group{margin-bottom:44px;}
 .dest-geo{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin:30px 0 6px;padding-bottom:10px;border-bottom:1px solid var(--line);}
