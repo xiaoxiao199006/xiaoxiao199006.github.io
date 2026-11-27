@@ -82,6 +82,9 @@
 
   function priceHTML(p) {
     if (!p.price) return '';
+    if (p.price.nego) {
+      return '<div class="price"><span class="price-main">面议</span><span class="price-unit">按需定制</span></div>';
+    }
     var rng = (p.price.range || '').trim();
     var rngHTML = rng ? '<span class="price-range">' + (p.price.fixed === 0 ? esc(rng) : '常规区间：' + esc(rng)) + '</span>' : '';
     if (p.price.fixed === 0) {
