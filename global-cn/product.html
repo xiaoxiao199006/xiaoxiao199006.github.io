@@ -85,10 +85,17 @@
   var incl = (p.included || []).map(function(x){ return '<li>' + JW.esc(x) + '</li>'; }).join('');
   var excl = (p.excluded || []).map(function(x){ return '<li>' + JW.esc(x) + '</li>'; }).join('');
 
+  var galleryHTML = p.img
+    ? '<div class="gallery"><img src="' + JW.esc(p.img) + '" alt="' + JW.esc(p.name) + '"></div>'
+    : '<div class="gallery ph--' + p.cat + '"><div class="ph"><span class="media-icon">' + JW.catIcon(p.cat) + '</span><div class="media-city">' + JW.esc(p.city) + '</div><div class="media-cat">' + JW.esc(JW.CAT[p.cat].label) + '</div></div></div>';
+  var itinHTML = (p.itinerary && p.itinerary.length)
+    ? '<div class="panel itin-panel"><h3>行程流程</h3><ol class="tl">' + p.itinerary.map(function(s){ return '<li><span class="tl-phase">' + JW.esc(s.phase) + '</span><span class="tl-text">' + JW.esc(s.text) + '</span></li>'; }).join('') + '</ol></div>'
+    : '';
+
   root.innerHTML =
     '<nav style="font-size:12.5px;color:var(--slate-soft);margin-bottom:18px;"><a href="index.html">首页</a> · <a href="catalog.html">目的地</a> · <a href="catalog.html?region=' + encodeURIComponent(p.region) + '">' + JW.esc(p.region) + '</a></nav>' +
     '<div class="detail">' +
-      '<div class="gallery ph--' + p.cat + '"><div class="ph"><span class="media-icon">' + JW.catIcon(p.cat) + '</span><div class="media-city">' + JW.esc(p.city) + '</div><div class="media-cat">' + JW.esc(JW.CAT[p.cat].label) + '</div></div></div>' +
+      galleryHTML +
       '<div class="side">' +
         '<div>' + JW.starsHTML(p.tags.stars) + (p.standalone ? ' <span class="tag tag--plain">仅门票/咨询</span>' : '') + '</div>' +
         '<h1>' + JW.esc(p.name) + '</h1>' +
@@ -109,7 +116,8 @@
       '<div class="panel"><h3>费用包含</h3><ul class="fact-list">' + incl + '</ul></div>' +
       '<div class="panel"><h3>费用不含</h3><ul class="fact-list">' + excl + '</ul></div>' +
     '</div>' +
-    (p.note ? '<div class="note-box"><b>出行须知：</b> ' + JW.esc(p.note) + '</div>' : '');
+    (p.note ? '<div class="note-box"><b>出行须知：</b> ' + JW.esc(p.note) + '</div>' : '') +
+    itinHTML;
 
   /* 相关推荐：同目的地优先，再看同人群、同品类，排除自身，最多 3 条 */
   var rels = P.filter(function(x){ return x.id !== p.id; })
