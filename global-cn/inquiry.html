@@ -131,7 +131,7 @@
     var p = JW.byId(pid);
     if (p) {
       msg.value += (msg.value ? '\n\n' : '') + '我想咨询：' + p.name + '（' + p.city + '）。 ' +
-        (p.price && p.price.fixed ? '标注 ¥' + Number(p.price.fixed).toLocaleString() + ' 起，常规区间 ' + p.price.range + '。' : '请为该项服务报价。');
+        (p.price && p.price.fixed ? '标注 ¥' + Number(p.price.fixed).toLocaleString() + ' 起' + (p.price.range ? '，常规区间 ' + p.price.range : '') + '。' : '请为该项服务报价。');
     }
   }
 
