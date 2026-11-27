@@ -40,28 +40,28 @@
 <section class="section section--paper">
   <div class="wrap">
     <div class="filters">
-      <div class="fgroup">
-        <label>大洲</label>
+      <div class="fgroup" data-key="continent">
+        <button class="fgroup-head" type="button"><span class="f-title">大洲</span><span class="f-active"></span><span class="f-arrow" aria-hidden="true">▾</span></button>
         <div class="chip-row" id="chips-continent"></div>
       </div>
-      <div class="fgroup">
-        <label>国家</label>
+      <div class="fgroup" data-key="country">
+        <button class="fgroup-head" type="button"><span class="f-title">国家</span><span class="f-active"></span><span class="f-arrow" aria-hidden="true">▾</span></button>
         <div class="chip-row" id="chips-country"></div>
       </div>
-      <div class="fgroup">
-        <label>城市 / 区域</label>
+      <div class="fgroup" data-key="city">
+        <button class="fgroup-head" type="button"><span class="f-title">城市 / 区域</span><span class="f-active"></span><span class="f-arrow" aria-hidden="true">▾</span></button>
         <div class="chip-row" id="chips-city"></div>
       </div>
-      <div class="fgroup">
-        <label>服务品类</label>
+      <div class="fgroup" data-key="cat">
+        <button class="fgroup-head" type="button"><span class="f-title">服务品类</span><span class="f-active"></span><span class="f-arrow" aria-hidden="true">▾</span></button>
         <div class="chip-row" id="chips-cat"></div>
       </div>
-      <div class="fgroup">
-        <label>适合人群</label>
+      <div class="fgroup" data-key="age">
+        <button class="fgroup-head" type="button"><span class="f-title">适合人群</span><span class="f-active"></span><span class="f-arrow" aria-hidden="true">▾</span></button>
         <div class="chip-row" id="chips-age"></div>
       </div>
-      <div class="fgroup fgroup--search">
-        <label for="f-q">关键词搜索</label>
+      <div class="fgroup fgroup--search" data-key="q">
+        <button class="fgroup-head" type="button"><span class="f-title">关键词搜索</span><span class="f-arrow" aria-hidden="true">▾</span></button>
         <input id="f-q" type="text" placeholder="如：邮轮、雪山、接机、参访">
       </div>
     </div>
@@ -118,6 +118,27 @@
   var count = document.getElementById('filter-count');
 
   var state = { continent: '', country: '', city: '', cat: '', age: '' };
+
+  /* 筛选手风琴：默认收起，点击分类头展开；已选条件在标题旁标注并自动展开 */
+  function fgroupByKey(k){ return document.querySelector('.fgroup[data-key="' + k + '"]'); }
+  function syncActive(){
+    [['continent', state.continent], ['country', state.country], ['city', state.city]].forEach(function(pair){
+      var g = fgroupByKey(pair[0]); if (!g) return;
+      var el = g.querySelector('.f-active'); if (el) el.textContent = pair[1] || '';
+    });
+    var catEl = fgroupByKey('cat').querySelector('.f-active');
+    if (catEl) catEl.textContent = state.cat ? (catLabels[state.cat] || state.cat) : '';
+    var ageEl = fgroupByKey('age').querySelector('.f-active');
+    if (ageEl) ageEl.textContent = state.age ? (JW.AGE[state.age] || state.age) : '';
+  }
+  function revealActive(){
+    [['continent', state.continent], ['country', state.country], ['city', state.city], ['cat', state.cat], ['age', state.age]].forEach(function(p){
+      if (p[1]) { var g = fgroupByKey(p[0]); if (g) g.classList.add('open'); }
+    });
+  }
+  Array.prototype.forEach.call(document.querySelectorAll('.fgroup-head'), function(head){
+    head.addEventListener('click', function(){ head.closest('.fgroup').classList.toggle('open'); });
+  });
 
   /* 品类独立模块：顺序固定，景点项目在前，酒店、用车（接送机+包车）、参访与加项在后 */
   var MODULES = [
@@ -200,6 +221,7 @@
     }
   }
   applyParams();
+  revealActive();
   renderGeoRows();
   renderRow(rowC, MODULES.map(function(m){ return m.id; }), catLabels, state.cat, '全部品类', function(v){
     state.cat = v; apply();
@@ -263,7 +285,7 @@
     root.innerHTML = html;
   }
 
-  function apply(){ render(filtered()); }
+  function apply(){ syncActive(); render(filtered()); }
 
   q.addEventListener('input', apply);
   apply();
