@@ -82,10 +82,12 @@
 
   function priceHTML(p) {
     if (!p.price) return '';
+    var rng = (p.price.range || '').trim();
+    var rngHTML = rng ? '<span class="price-range">' + (p.price.fixed === 0 ? esc(rng) : '常规区间：' + esc(rng)) + '</span>' : '';
     if (p.price.fixed === 0) {
-      return '<div class="price"><span class="price-main">免费规划</span><span class="price-range">' + esc(p.price.range) + '</span></div>';
+      return '<div class="price"><span class="price-main">免费规划</span>' + rngHTML + '</div>';
     }
-    return '<div class="price"><span class="price-main">¥' + Number(p.price.fixed).toLocaleString() + ' 起</span><span class="price-unit">/ ' + esc(p.price.unit) + '</span><span class="price-range">常规区间：' + esc(p.price.range) + '</span></div>';
+    return '<div class="price"><span class="price-main">¥' + Number(p.price.fixed).toLocaleString() + ' 起</span><span class="price-unit">/ ' + esc(p.price.unit) + '</span>' + rngHTML + '</div>';
   }
 
   function starsHTML(n) {
