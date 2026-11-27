@@ -113,9 +113,12 @@
     opts = opts || {};
     var fav = isFav(p.id);
     var badge = p.standalone ? '<span class="tag tag--plain">单独购票/咨询</span>' : '';
+    var mediaInner = p.img
+      ? '<img src="' + esc(p.img) + '" alt="' + esc(p.name) + '" loading="lazy">'
+      : '<span class="media-icon">' + catIcon(p.cat) + '</span>';
     return '<article class="card prod" data-id="' + esc(p.id) + '">' +
-      '<a class="media ph--' + p.cat + '" href="product.html?id=' + esc(p.id) + '">' +
-        '<span class="media-icon">' + catIcon(p.cat) + '</span>' +
+      '<a class="media ph--' + p.cat + (p.img ? ' has-img' : '') + '" href="product.html?id=' + esc(p.id) + '">' +
+        mediaInner +
         '<span class="media-city">' + esc(p.city) + '</span>' +
         '<span class="media-cat">' + esc((CAT[p.cat] || CAT.other).label) + '</span>' +
       '</a>' +
