@@ -145,7 +145,7 @@
     { id: 'attraction', keys: ['attraction'], label: '景点 · 项目', desc: '导游观光、一日游、门票与文化体验，按时段排入行程。', icon: 'attraction' },
     { id: 'hotel',      keys: ['hotel'],      label: '酒店',   desc: '四星、五星与精品酒店，按晚挂入每一站行程。', icon: 'hotel' },
     { id: 'vehicle',    keys: ['transfer', 'car'], label: '用车', desc: '机场接送与包车，按车型、人数与行程安排车辆。', icon: 'car' },
-    { id: 'corp',       keys: ['corp'],      label: '企业参访', desc: '科技园区、创新集群与企业展厅，按对方接待审批安排。', icon: 'corp' },
+    { id: 'corp',       keys: ['corp'],      label: '企业参访', desc: '科技园区、创新集群、知名企业总部与代表性港口物流园区参观，按对方接待审批安排。', icon: 'corp' },
     { id: 'univ',       keys: ['univ'],       label: '院校参访 · 游学', desc: '知名大学校园参观与交流，按校方访客政策预约安排。', icon: 'univ' },
     { id: 'other',      keys: ['other'],      label: '加项服务', desc: '餐饮、地陪、翻译、签证协助、贵宾厅、选座与行程规划等。', icon: 'other' }
   ];
@@ -176,6 +176,7 @@
     });
   }
 
+  function isOrg(p){ return p.cat === 'corp' || p.cat === 'univ'; }
   function countryPool(){
     return ALL.filter(function(p){ return !state.continent || p.continent === state.continent; });
   }
@@ -192,7 +193,7 @@
       state.country = v; state.city = '';
       renderGeoRows(); apply();
     });
-    renderRow(rowCi, distinct(cityPool(), function(p){ return p.city; }), null, state.city, '全部城市 / 区域', function(v){
+    renderRow(rowCi, distinct(cityPool().filter(function(p){ return !isOrg(p); }), function(p){ return p.city; }), null, state.city, '全部城市 / 区域', function(v){
       state.city = v; apply();
     });
   }
@@ -235,7 +236,7 @@
     return P.filter(function(p){
       if (state.continent && p.continent !== state.continent) return false;
       if (state.country && p.country !== state.country) return false;
-      if (state.city && p.city !== state.city) return false;
+      if (state.city && !isOrg(p) && p.city !== state.city) return false;
       if (state.cat){
         var mod = moduleById[state.cat];
         if (!mod || mod.keys.indexOf(p.cat) < 0) return false;
@@ -253,12 +254,13 @@
         '<p style="margin-top:14px;"><a class="btn btn--gold" href="inquiry.html">发送需求</a></p>';
       return;
     }
-    /* 按 大洲 → 国家 → 城市 分组，保持数据顺序 */
+    /* 普通条目按 大洲 → 国家 → 城市 分组；企业/院校参访按国家聚合，不落城市 */
     var groups = [], gmap = {};
     list.forEach(function(p){
-      var key = p.continent + '||' + p.country + '||' + p.city;
+      var org = isOrg(p);
+      var key = p.continent + '||' + p.country + '||' + (org ? '@org' : p.city);
       if (!gmap[key]){
-        gmap[key] = { continent: p.continent, country: p.country, city: p.city, items: [] };
+        gmap[key] = { continent: p.continent, country: p.country, city: p.city, org: org, items: [] };
         groups.push(gmap[key]);
       }
       gmap[key].items.push(p);
@@ -268,7 +270,7 @@
     groups.forEach(function(g){
       html += '<div class="dest-group">';
       html += '<div class="dest-geo"><span class="geo-crumb">' + JW.esc(g.continent) + '</span>' +
-        '<h2>' + JW.esc(g.country) + ' · ' + JW.esc(g.city) + '</h2>' +
+        '<h2>' + (g.org ? JW.esc(g.country) : JW.esc(g.country) + ' · ' + JW.esc(g.city)) + '</h2>' +
         '<span class="geo-count">共 ' + g.items.length + ' 项</span></div>';
       MODULES.forEach(function(m){
         var items = g.items.filter(function(x){ return m.keys.indexOf(x.cat) >= 0; });
